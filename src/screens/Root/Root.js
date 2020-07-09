@@ -2,7 +2,9 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {Home, Favourites} from '..';
+import {Favourites} from '..';
+import {Colors} from '../../utils/constant';
+import HomeNavigation from '../Navigations/HomeNavigation';
 
 const Root = () => {
   const Tab = createBottomTabNavigator();
@@ -11,11 +13,11 @@ const Root = () => {
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        activeTintColor: '#e91e63',
+        activeTintColor: Colors.red,
       }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeNavigation}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size}) => (

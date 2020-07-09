@@ -9,15 +9,17 @@ import styles from './styles';
 const CardBottom = () => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.iconButton}>
-        <AntDesign name="like2" size={20} />
-        <Text style={styles.count}>20</Text>
-      </TouchableOpacity>
+      <View style={styles.leftContainer}>
+        <TouchableOpacity style={styles.iconButton}>
+          <AntDesign name="like2" size={20} />
+          <Text style={styles.count}>20</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.iconButton}>
-        <AntDesign name="dislike2" size={20} />
-        <Text style={styles.count}>4</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <AntDesign name="dislike2" size={20} />
+          <Text style={styles.count}>4</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.rightContainer}>
         <TouchableOpacity style={styles.commentContainer}>

@@ -4,12 +4,11 @@ import {Colors} from '../../utils/constant';
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 15,
-    paddingHorizontal: 15,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    marginVertical: 10,
     borderTopColor: Colors.darkGray,
     borderBottomColor: Colors.darkGray,
+    backgroundColor: Colors.white,
+    elevation: 6,
   },
 
   icon: {
@@ -18,6 +17,7 @@ const styles = StyleSheet.create({
 
   authorContainer: {
     flexDirection: 'row',
+    paddingHorizontal: 10,
   },
 
   nameContainer: {
@@ -36,16 +36,29 @@ const styles = StyleSheet.create({
   },
 
   content: {
-    marginLeft: 10,
+    marginBottom: 10,
+  },
+
+  image: {
+    height: 150,
+    width: '100%',
+    marginBottom: 10,
   },
 
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    paddingHorizontal: 10,
+    marginBottom: 5,
   },
 
   description: {
     width: '100%',
+    paddingHorizontal: 10,
+  },
+
+  touchable: {
+    overflow: 'hidden',
   },
 });
 

@@ -1,15 +1,15 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, ScrollView} from 'react-native';
 
 import styles from './styles';
 import {Card} from '../../components';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
-    <View style={styles.screen}>
+    <ScrollView style={styles.screen}>
+      <Card navigation={navigation} />
       <Card />
-      <Card />
-    </View>
+    </ScrollView>
   );
 };
 

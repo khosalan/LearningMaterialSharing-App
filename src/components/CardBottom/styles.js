@@ -8,13 +8,22 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.darkGray,
     marginTop: 8,
     paddingVertical: 5,
-    paddingHorizontal: 5,
+    marginHorizontal: 15,
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    height: 40,
+    alignItems: 'center',
+  },
+
+  leftContainer: {
+    flex: 2,
     flexDirection: 'row',
   },
 
   iconButton: {
     marginRight: 25,
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   count: {
@@ -22,14 +31,15 @@ const styles = StyleSheet.create({
   },
 
   rightContainer: {
+    flex: 3,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex: 1,
   },
 
   commentContainer: {
     marginLeft: 20,
     flexDirection: 'row',
+    alignItems: 'center',
   },
 
   comment: {
