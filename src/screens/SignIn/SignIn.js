@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './styles';
 import {Colors} from '../../utils/constant';
 
-const SignIn = () => {
+const SignIn = ({navigation}) => {
   const [secure, setSecure] = useState(true);
 
   const handleEyeClick = () => {
@@ -54,7 +54,8 @@ const SignIn = () => {
         <View style={styles.createButton}>
           <Button
             title="CREATE AN ACCOUNT"
-            buttonStyle={{backgroundColor: '#c7344c'}}
+            buttonStyle={{backgroundColor: Colors.lightRed}}
+            onPress={() => navigation.navigate('SignUp')}
           />
         </View>
       </View>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Image} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SignUp, SignIn} from '..';
 
@@ -26,7 +25,11 @@ const AuthNavigation = () => {
         component={SignIn}
         options={{title: 'SIGN IN'}}
       />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{title: 'SIGN UP', headerLeft: null}}
+      />
     </Stack.Navigator>
   );
 };
