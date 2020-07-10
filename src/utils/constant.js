@@ -6,6 +6,7 @@ const Colors = {
   bgGray: '#e0e0e0',
   blue: '#38599c',
   red: '#e80e0e',
+  orange: '#d6661c',
 };
 
 export {Colors};
