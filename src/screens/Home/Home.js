@@ -1,15 +1,26 @@
 import React from 'react';
-import {View, ScrollView} from 'react-native';
+import {View, FlatList} from 'react-native';
 
 import styles from './styles';
 import {Card} from '../../components';
+import POSTS from '../../data/dummy-data';
 
 const Home = ({navigation}) => {
   return (
-    <ScrollView style={styles.screen}>
-      <Card navigation={navigation} />
-      <Card />
-    </ScrollView>
+    <FlatList
+      data={POSTS}
+      renderItem={({item}) => (
+        <Card
+          name={item.ownerName}
+          time={item.time}
+          title={item.title}
+          description={item.description}
+          imageUrl={item.imageUrl}
+          like={item.like}
+          dislike={item.dislike}
+        />
+      )}
+    />
   );
 };
 

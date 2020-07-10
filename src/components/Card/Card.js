@@ -27,36 +27,34 @@ const Card = props => {
           style={styles.icon}
         />
         <View style={styles.nameContainer}>
-          <Text style={styles.name}>Khosalan Ganesan</Text>
-          <Text style={styles.time}>2h ago</Text>
+          <Text style={styles.name}>{props.name}</Text>
+          <Text style={styles.time}>{props.time}</Text>
         </View>
       </View>
 
       <View style={styles.touchable}>
         <TouchableCmp
-          onPress={() => props.navigation.navigate('Description')}
+          //onPress={() => props.navigation.navigate('Description')}
           useForeground>
           <View style={styles.content}>
-            <Image
-              source={{
-                uri:
-                  'https://www.nanotechmag.com/wp-content/uploads/2020/04/dreamstime_xxl_162140282-702x336.jpg',
-              }}
-              style={styles.image}
-            />
-            <Text style={styles.title}>Nano Technology</Text>
+            {props.imageUrl ? (
+              <Image
+                source={{
+                  uri: props.imageUrl,
+                }}
+                style={styles.image}
+              />
+            ) : null}
+            <Text style={styles.title}>{props.title}</Text>
 
-            <Text numberOfLines={3} style={styles.description}>
-              This is the description. This is the description. This is the
-              description. This is the description. This is the description.
-              This is the description. This is the description. This is the
-              description. This is the description. This is the description.
+            <Text numberOfLines={4} style={styles.description}>
+              {props.description}
             </Text>
           </View>
         </TouchableCmp>
       </View>
 
-      <CardBottom />
+      <CardBottom like={props.like} dislike={props.dislike} />
     </View>
   );
 };

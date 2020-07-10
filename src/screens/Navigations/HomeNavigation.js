@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, HeaderTitle} from '@react-navigation/stack';
 import {Home, PostDescription} from '..';
 
 import {Colors} from '../../utils/constant';
@@ -15,7 +15,11 @@ const HomeNavigation = () => {
         },
         headerTintColor: Colors.white,
       }}>
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{headerTitle: 'E-Learn Share'}}
+      />
       <Stack.Screen name="Description" component={PostDescription} />
     </Stack.Navigator>
   );

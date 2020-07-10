@@ -6,18 +6,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import styles from './styles';
 
-const CardBottom = () => {
+const CardBottom = props => {
   return (
     <View style={styles.container}>
       <View style={styles.leftContainer}>
         <TouchableOpacity style={styles.iconButton}>
           <AntDesign name="like2" size={20} />
-          <Text style={styles.count}>20</Text>
+          <Text style={styles.count}>{props.like}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.iconButton}>
           <AntDesign name="dislike2" size={20} />
-          <Text style={styles.count}>4</Text>
+          <Text style={styles.count}>{props.dislike}</Text>
         </TouchableOpacity>
       </View>
 
