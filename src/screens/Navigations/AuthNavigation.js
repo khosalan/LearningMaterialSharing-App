@@ -1,6 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {SignUp, SignIn} from '..';
+// import {SignUp, SignIn} from '..';
+import SignIn from '../SignIn';
+import SignUp from '../SignUp';
 
 import {Colors} from '../../utils/constant';
 

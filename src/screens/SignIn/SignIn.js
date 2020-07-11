@@ -43,13 +43,17 @@ const SignIn = ({navigation}) => {
           }
         />
 
-        <TouchableOpacity style={styles.forgotContainer}>
+        <TouchableOpacity style={styles.forgotContainer} onPress={() => {}}>
           <Text style={styles.forgotText}>Forgot password?</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button title="SIGN IN" buttonStyle={{backgroundColor: Colors.blue}} />
+        <Button
+          title="SIGN IN"
+          buttonStyle={{backgroundColor: Colors.blue}}
+          onPress={() => {}}
+        />
 
         <View style={styles.createButton}>
           <Button

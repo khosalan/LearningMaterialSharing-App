@@ -78,6 +78,7 @@ const SignUp = ({navigation}) => {
           <Button
             title="SIGN UP"
             buttonStyle={{backgroundColor: Colors.blue}}
+            onPress={() => {}}
           />
 
           <View style={styles.createButton}>
