@@ -1,3 +1,3 @@
-import PostDescription from './PostDescription';
+import PostDescription, {screenOptions} from './PostDescription';
 
-export default PostDescription;
+export {PostDescription, screenOptions};

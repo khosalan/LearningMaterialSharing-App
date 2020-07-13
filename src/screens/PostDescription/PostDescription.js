@@ -9,7 +9,7 @@ const PostDescription = ({route}) => {
   const post = useSelector(state =>
     state.posts.allPosts.find(post => post.id === postID),
   );
-  console.log(post);
+  // console.log(post);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -24,6 +24,12 @@ const PostDescription = ({route}) => {
       </CardFullView>
     </ScrollView>
   );
+};
+
+export const screenOptions = ({route}) => {
+  return {
+    headerTitle: route.params.postTitle,
+  };
 };
 
 export default PostDescription;

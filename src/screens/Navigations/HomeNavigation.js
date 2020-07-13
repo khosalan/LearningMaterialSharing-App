@@ -1,8 +1,11 @@
 import React from 'react';
-import {createStackNavigator, HeaderTitle} from '@react-navigation/stack';
-// import {Home, PostDescription} from '..';
-import Home from '../Home';
-import PostDescription from '../PostDescription';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import {Home, screenOptions as homeScreenOptions} from '../Home';
+import {
+  PostDescription,
+  screenOptions as postScreenOptions,
+} from '../PostDescription';
 
 import {Colors} from '../../utils/constant';
 
@@ -17,12 +20,12 @@ const HomeNavigation = () => {
         },
         headerTintColor: Colors.white,
       }}>
+      <Stack.Screen name="Home" component={Home} options={homeScreenOptions} />
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerTitle: 'E-Learn Share'}}
+        name="Description"
+        component={PostDescription}
+        options={postScreenOptions}
       />
-      <Stack.Screen name="Description" component={PostDescription} />
     </Stack.Navigator>
   );
 };
