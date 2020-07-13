@@ -10,6 +10,7 @@ class Post {
     like,
     dislike,
     comment,
+    links,
   ) {
     this.id = id;
     this.ownerId = ownerId;
@@ -21,6 +22,7 @@ class Post {
     this.like = like;
     this.dislike = dislike;
     this.comment = comment;
+    this.links = links;
   }
 }
 

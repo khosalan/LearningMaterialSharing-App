@@ -8,9 +8,11 @@ const POSTS = [
     '2h ago',
     'Nano Technoogy',
     'https://www.nanotechmag.com/wp-content/uploads/2020/04/dreamstime_xxl_162140282-702x336.jpg',
-    'Nanotechnology is manipulation of matter on an atomic, molecular, and supramolecular scale. The earliest, widespread description of nanotechnology referred to the particular technological goal of',
+    'Nanotechnology is manipulation of matter on an atomic, molecular, and supramolecular scale. The earliest, widespread description of nanotechnology referred to the particular technological goal of Nanotechnology is manipulation of matter on an atomic, molecular, and supramolecular scale. The earliest, widespread description of nanotechnology referred to the particular technological goal of',
     20,
     2,
+    [],
+    ['https://reactnative.dev', 'https://google.com'],
   ),
 
   new Post(

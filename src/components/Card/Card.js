@@ -10,7 +10,6 @@ import {
 import {Avatar} from 'react-native-paper';
 
 import styles from './styles';
-import CardBottom from '../CardBottom';
 
 const Card = props => {
   let TouchableCmp = TouchableOpacity;
@@ -33,9 +32,7 @@ const Card = props => {
       </View>
 
       <View style={styles.touchable}>
-        <TouchableCmp
-          //onPress={() => props.navigation.navigate('Description')}
-          useForeground>
+        <TouchableCmp onPress={props.onSelect} useForeground>
           <View style={styles.content}>
             {props.imageUrl ? (
               <Image
@@ -54,7 +51,8 @@ const Card = props => {
         </TouchableCmp>
       </View>
 
-      <CardBottom like={props.like} dislike={props.dislike} />
+      {/* <CardBottom like={props.like} dislike={props.dislike} /> */}
+      <View>{props.children}</View>
     </View>
   );
 };

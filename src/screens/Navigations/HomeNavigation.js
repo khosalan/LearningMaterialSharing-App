@@ -1,6 +1,8 @@
 import React from 'react';
 import {createStackNavigator, HeaderTitle} from '@react-navigation/stack';
-import {Home, PostDescription} from '..';
+// import {Home, PostDescription} from '..';
+import Home from '../Home';
+import PostDescription from '../PostDescription';
 
 import {Colors} from '../../utils/constant';
 
