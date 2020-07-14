@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 
   linkContainer: {
     marginHorizontal: 10,
-    marginTop: 5,
+    marginTop: 10,
   },
 
   linkTitle: {

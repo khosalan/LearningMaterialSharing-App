@@ -6,6 +6,7 @@ import {
   PostDescription,
   screenOptions as postScreenOptions,
 } from '../PostDescription';
+import {AddPost, screenOptions as addPostScreenOptions} from '../AddPost';
 
 import {Colors} from '../../utils/constant';
 
@@ -25,6 +26,11 @@ const HomeNavigation = () => {
         name="Description"
         component={PostDescription}
         options={postScreenOptions}
+      />
+      <Stack.Screen
+        name="AddPost"
+        component={AddPost}
+        options={addPostScreenOptions}
       />
     </Stack.Navigator>
   );

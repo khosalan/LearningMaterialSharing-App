@@ -47,7 +47,7 @@ export const screenOptions = ({navigation}) => {
         <Item
           title="Add"
           iconName="md-add-circle"
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('AddPost')}
         />
       </HeaderButtons>
     ),

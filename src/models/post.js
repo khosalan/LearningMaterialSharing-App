@@ -7,10 +7,10 @@ class Post {
     title,
     imageUrl,
     description,
+    links,
     like,
     dislike,
     comment,
-    links,
   ) {
     this.id = id;
     this.ownerId = ownerId;

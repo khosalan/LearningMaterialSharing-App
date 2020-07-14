@@ -33,7 +33,9 @@ const CardFullView = props => {
         <Text style={styles.description}>{props.description}</Text>
 
         <View style={styles.linkContainer}>
-          {props.links && <Text style={styles.linkTitle}>Usefull Links</Text>}
+          {props.links.length !== 0 && (
+            <Text style={styles.linkTitle}>Usefull Links</Text>
+          )}
           {props.links
             ? props.links.map(link => (
                 <Text

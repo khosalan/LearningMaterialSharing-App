@@ -9,7 +9,7 @@ const CustomHeaderButtom = props => {
     <HeaderButton
       {...props}
       IconComponent={Icon}
-      iconSize={23}
+      iconSize={26}
       color={Colors.white}
     />
   );
