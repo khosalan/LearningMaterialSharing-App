@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.bgGray,
   },
+
+  centered: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
 });
 
 export default styles;

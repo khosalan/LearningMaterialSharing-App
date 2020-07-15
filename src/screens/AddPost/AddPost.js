@@ -91,7 +91,7 @@ const AddPost = () => {
           )
         }
       />
-      {console.log(formState)}
+      {/* {console.log(formState)} */}
     </ScrollView>
   );
 };
