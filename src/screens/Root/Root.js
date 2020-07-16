@@ -1,4 +1,5 @@
 import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,6 +9,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {Colors} from '../../utils/constant';
 import HomeNavigation from '../Navigations/HomeNavigation';
 import FavouritesNavigation from '../Navigations/FavouritesNavigation';
+import MyPostsNavigation from '../Navigations/MyPostsNavigation';
+import {Profile, screenOptions as profileScreenOptions} from '../Profile';
 
 const HomeNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -41,6 +44,26 @@ const HomeNavigator = () => {
   );
 };
 
+const ProfileNavigator = () => {
+  const Stack = createStackNavigator();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors.blue,
+        },
+        headerTintColor: Colors.white,
+      }}>
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={profileScreenOptions}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const Root = () => {
   const Drawer = createDrawerNavigator();
   return (
@@ -52,6 +75,32 @@ const Root = () => {
           drawerIcon: props => (
             <MaterialCommunityIcons
               name="home-outline"
+              size={23}
+              color={props.color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Profile"
+        component={ProfileNavigator}
+        options={{
+          drawerIcon: props => (
+            <MaterialCommunityIcons
+              name="account-outline"
+              size={23}
+              color={props.color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="MyPosts"
+        component={MyPostsNavigation}
+        options={{
+          drawerIcon: props => (
+            <MaterialCommunityIcons
+              name="book-open-outline"
               size={23}
               color={props.color}
             />

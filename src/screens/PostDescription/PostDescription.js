@@ -22,7 +22,12 @@ const PostDescription = ({navigation, route}) => {
         description={post.description}
         imageUrl={post.imageUrl}
         links={post.links}>
-        <CardBottom id={post.id} like={post.like} dislike={post.dislike} />
+        <CardBottom
+          id={post.id}
+          like={post.like}
+          dislike={post.dislike}
+          navigation={navigation}
+        />
       </CardFullView>
     </ScrollView>
   );

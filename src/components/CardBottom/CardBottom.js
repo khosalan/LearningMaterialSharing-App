@@ -37,7 +37,9 @@ const CardBottom = props => {
       </View>
 
       <View style={styles.rightContainer}>
-        <TouchableOpacity style={styles.commentContainer}>
+        <TouchableOpacity
+          style={styles.commentContainer}
+          onPress={() => props.navigation.navigate('Comments')}>
           <MaterialCommunityIcons name="comment-text-outline" size={20} />
           <View style={styles.comment}>
             <Text>Comment</Text>

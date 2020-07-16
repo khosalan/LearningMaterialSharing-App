@@ -1,16 +1,17 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Favourites, screenOptions as favScreenOptions} from '../Favourites';
+import {MyPosts, screenOptions as myPostScreenOptions} from '../MyPosts';
 import {
   PostDescription,
   screenOptions as postScreenOptions,
 } from '../PostDescription';
+import {AddPost, screenOptions as addPostScreenOptions} from '../AddPost';
 import Comments from '../Comments';
 
 import {Colors} from '../../utils/constant';
 
-const FavouritesNavigation = () => {
+const MyPostsNavigation = () => {
   const Stack = createStackNavigator();
 
   return (
@@ -22,18 +23,23 @@ const FavouritesNavigation = () => {
         headerTintColor: Colors.white,
       }}>
       <Stack.Screen
-        name="Favourite"
-        component={Favourites}
-        options={favScreenOptions}
+        name="MyPosts"
+        component={MyPosts}
+        options={myPostScreenOptions}
       />
       <Stack.Screen
         name="Description"
         component={PostDescription}
         options={postScreenOptions}
       />
+      <Stack.Screen
+        name="AddPost"
+        component={AddPost}
+        options={addPostScreenOptions}
+      />
       <Stack.Screen name="Comments" component={Comments} />
     </Stack.Navigator>
   );
 };
 
-export default FavouritesNavigation;
+export default MyPostsNavigation;

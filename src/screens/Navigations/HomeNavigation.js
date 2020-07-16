@@ -7,6 +7,7 @@ import {
   screenOptions as postScreenOptions,
 } from '../PostDescription';
 import {AddPost, screenOptions as addPostScreenOptions} from '../AddPost';
+import Comments from '../Comments';
 
 import {Colors} from '../../utils/constant';
 
@@ -32,6 +33,7 @@ const HomeNavigation = () => {
         component={AddPost}
         options={addPostScreenOptions}
       />
+      <Stack.Screen name="Comments" component={Comments} />
     </Stack.Navigator>
   );
 };

@@ -15,6 +15,7 @@ const SearchBar = props => {
         style={styles.input}
         autoCorrect={false}
         placeholderTextColor={Colors.darkGray}
+        returnKeyType="search"
       />
     </View>
   );

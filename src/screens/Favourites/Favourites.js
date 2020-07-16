@@ -22,7 +22,12 @@ const Favourites = ({navigation}) => {
         description={item.description}
         imageUrl={item.imageUrl}
         onSelect={() => onSelectPostHandler(item.id, item.title)}>
-        <CardBottom id={item.id} like={item.like} dislike={item.dislike} />
+        <CardBottom
+          id={item.id}
+          like={item.like}
+          dislike={item.dislike}
+          navigation={navigation}
+        />
       </Card>
     );
   };
