@@ -1,8 +1,9 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from './styles';
+import {Colors} from '../../utils/constant';
 
 const SearchBar = props => {
   return (
@@ -13,6 +14,7 @@ const SearchBar = props => {
         placeholder="Search"
         style={styles.input}
         autoCorrect={false}
+        placeholderTextColor={Colors.darkGray}
       />
     </View>
   );

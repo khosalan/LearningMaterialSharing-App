@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // import {Favourites} from '..';
 import {Colors} from '../../utils/constant';
 import HomeNavigation from '../Navigations/HomeNavigation';
-import Favourites from '../Favourites';
+import FavouritesNavigation from '../Navigations/FavouritesNavigation';
 
 const HomeNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -29,7 +29,7 @@ const HomeNavigator = () => {
       />
       <Tab.Screen
         name="Favourites"
-        component={Favourites}
+        component={FavouritesNavigation}
         options={{
           tabBarLabel: 'Favourites',
           tabBarIcon: ({color, size}) => (

@@ -1,10 +1,11 @@
 import POSTS from '../../data/dummy-data';
 
-import {CREATE_POST} from '../actions/post';
+import {CREATE_POST, TOGGLE_FAVOURITE} from '../actions/post';
 import Post from '../../models/post';
 
 const initialState = {
   allPosts: POSTS,
+  favouritePosts: [],
 };
 
 export default (state = initialState, action) => {
@@ -27,6 +28,20 @@ export default (state = initialState, action) => {
         ...state,
         allPosts: state.allPosts.concat(newPost),
       };
+
+    case TOGGLE_FAVOURITE:
+      const existingIndex = state.favouritePosts.findIndex(
+        post => post.id === action.postID,
+      );
+
+      if (existingIndex >= 0) {
+        const updateFavPost = [...state.favouritePosts];
+        updateFavPost.splice(existingIndex, 1);
+        return {...state, favouritePosts: updateFavPost};
+      } else {
+        const post = state.allPosts.find(post => post.id === action.postID);
+        return {...state, favouritePosts: state.favouritePosts.concat(post)};
+      }
 
     default:
       return state;

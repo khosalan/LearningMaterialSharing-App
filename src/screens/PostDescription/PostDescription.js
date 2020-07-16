@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {ScrollView, Text} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {CardFullView, CardBottom} from '../../components';
+import {toggleFavourite} from '../../store/actions/post';
 
-const PostDescription = ({route}) => {
+const PostDescription = ({navigation, route}) => {
   const postID = route.params.postID;
   const post = useSelector(state =>
     state.posts.allPosts.find(post => post.id === postID),
   );
-  // console.log(post);
+
+  const dispatch = useDispatch();
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -20,7 +22,7 @@ const PostDescription = ({route}) => {
         description={post.description}
         imageUrl={post.imageUrl}
         links={post.links}>
-        <CardBottom like={post.like} dislike={post.dislike} />
+        <CardBottom id={post.id} like={post.like} dislike={post.dislike} />
       </CardFullView>
     </ScrollView>
   );
