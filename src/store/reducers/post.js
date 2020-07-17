@@ -6,6 +6,7 @@ import Post from '../../models/post';
 const initialState = {
   allPosts: POSTS,
   favouritePosts: [],
+  myPosts: POSTS.filter(post => post.ownerId === 'u1'),
 };
 
 export default (state = initialState, action) => {
@@ -21,8 +22,6 @@ export default (state = initialState, action) => {
         action.postData.description,
         action.postData.links,
       );
-
-      console.log(newPost);
 
       return {
         ...state,

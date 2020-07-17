@@ -1,8 +1,9 @@
 import React, {useCallback, useEffect} from 'react';
 import {ScrollView, Text} from 'react-native';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {CardFullView, CardBottom} from '../../components';
+import {CardFullView, CardBottom, HeaderButton} from '../../components';
 import {toggleFavourite} from '../../store/actions/post';
 
 const PostDescription = ({navigation, route}) => {
@@ -33,9 +34,23 @@ const PostDescription = ({navigation, route}) => {
   );
 };
 
-export const screenOptions = ({route}) => {
+export const screenOptions = ({navigation, route}) => {
+  const editable = route.params.editable;
+  const postID = route.params.postID;
+
   return {
     headerTitle: route.params.postTitle,
+
+    headerRight: () =>
+      editable ? (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Edit"
+            iconName="md-create"
+            onPress={() => navigation.navigate('AddPost', {postID})}
+          />
+        </HeaderButtons>
+      ) : null,
   };
 };
 

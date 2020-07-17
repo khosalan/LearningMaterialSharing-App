@@ -1,6 +1,6 @@
 import React, {useState, useReducer} from 'react';
 import {ScrollView, View, Text, Button} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
@@ -21,15 +21,23 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const AddPost = () => {
-  const [input, setInput] = useState('');
+const AddPost = ({route}) => {
+  const postID = route.params ? route.params.postID : null;
+  const editPost = useSelector(state =>
+    state.posts.myPosts.find(post => post.id === postID),
+  );
+
+  const [input, setInput] = useState(
+    editPost ? editPost.links.toString().replace(/,/, `\n`) : '',
+  );
+
   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      title: '',
-      description: '',
-      imageUrl: '',
+      title: editPost ? editPost.title : '',
+      description: editPost ? editPost.description : '',
+      imageUrl: editPost ? editPost.imageUrl : '',
     },
 
     inputValidities: {
@@ -53,6 +61,7 @@ const AddPost = () => {
         error="Please enter a title"
         placeholder="Enter a title"
         icon="pencil"
+        value={formState.inputValues.title}
         onChangeText={inputChangeHandler.bind(this, 'title')}
       />
 
@@ -61,6 +70,7 @@ const AddPost = () => {
         error="Please enter desctiption"
         placeholder="Enter desctiption"
         multiline
+        value={formState.inputValues.description}
         onChangeText={inputChangeHandler.bind(this, 'description')}
       />
 
@@ -68,6 +78,7 @@ const AddPost = () => {
         label="Cover Image"
         placeholder="Image url, will be displayed in the post"
         icon="image"
+        value={formState.inputValues.imageUrl}
         onChangeText={inputChangeHandler.bind(this, 'imageUrl')}
       />
 
@@ -75,8 +86,11 @@ const AddPost = () => {
         label="Usefull Links (Place every links in a new line)"
         placeholder="Enter every links in a new line "
         multiline
-        onChangeText={text => setInput(text.split(/\n/))}
+        value={input}
+        onChangeText={text => setInput(text)}
       />
+
+      {/* {console.log(input)} */}
 
       <Button
         title="submit"
@@ -86,7 +100,7 @@ const AddPost = () => {
               formState.inputValues.title,
               formState.inputValues.description,
               formState.inputValues.imageUrl,
-              input,
+              input.split(/\n/),
             ),
           )
         }
@@ -96,9 +110,10 @@ const AddPost = () => {
   );
 };
 
-export const screenOptions = () => {
+export const screenOptions = ({route}) => {
+  const postID = route.params ? route.params.postID : null;
   return {
-    headerTitle: 'Create a Post',
+    headerTitle: postID ? 'Edit a Post' : 'Create a Post',
 
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>

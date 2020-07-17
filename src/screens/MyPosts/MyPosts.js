@@ -1,14 +1,46 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, FlatList} from 'react-native';
+import {useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
-import {HeaderButton} from '../../components';
+import {HeaderButton, Card, CardBottom} from '../../components';
 
-const MyPosts = () => {
+const MyPosts = ({navigation}) => {
+  const myPosts = useSelector(state => state.posts.myPosts);
+
+  const onSelectPostHandler = (id, title) => {
+    navigation.navigate('Description', {
+      postID: id,
+      postTitle: title,
+      editable: true,
+    });
+  };
+
+  const renderItem = ({item}) => {
+    return (
+      <Card
+        name={item.ownerName}
+        time={item.time}
+        title={item.title}
+        description={item.description}
+        imageUrl={item.imageUrl}
+        onSelect={() => onSelectPostHandler(item.id, item.title)}>
+        <CardBottom
+          id={item.id}
+          like={item.like}
+          dislike={item.dislike}
+          navigation={navigation}
+        />
+      </Card>
+    );
+  };
+
   return (
-    <View>
-      <Text>My Posts</Text>
-    </View>
+    <FlatList
+      data={myPosts}
+      renderItem={renderItem}
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 
