@@ -2,6 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import Post from '../../models/post';
 
 export const CREATE_POST = 'CREATE_POST';
+export const DELETE_POST = 'DELETE_POST';
 export const SET_POSTS = 'SET_POSTS';
 export const TOGGLE_FAVOURITE = 'TOGGLE_FAVOURITE';
 
@@ -64,6 +65,27 @@ export const createPost = (title, description, imageUrl, links) => {
   };
 };
 
+export const deletePost = postID => {
+  return async dispatch => {
+    try {
+      const response = await firestore()
+        .collection('Posts')
+        .doc(postID)
+        .delete();
+
+      dispatch({type: DELETE_POST, postID});
+    } catch (e) {
+      throw new Error('Something went wrong');
+    }
+  };
+};
+
 export const toggleFavourite = postID => {
-  return {type: TOGGLE_FAVOURITE, postID};
+  return async dispatch => {
+    // const response = await firestore()
+    //   .collection('u1')
+    //   .add();
+
+    dispatch({type: TOGGLE_FAVOURITE, postID});
+  };
 };

@@ -1,23 +1,30 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, FlatList, Text} from 'react-native';
+import {View, FlatList, Text, ActivityIndicator} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
 
 import styles from './styles';
 import {Card, CardBottom, HeaderButton, SearchBar} from '../../components';
+import {Colors} from '../../utils/constant';
 import * as postActions from '../../store/actions/post';
 
 const Home = ({navigation}) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState('');
 
   const dispatch = useDispatch();
 
-  const loadPost = useCallback(() => {
-    dispatch(postActions.fetchPosts());
+  const loadPost = useCallback(async () => {
+    try {
+      await dispatch(postActions.fetchPosts());
+    } catch (e) {}
   }, [dispatch]);
 
   useEffect(() => {
-    loadPost();
+    setIsLoading(true);
+    loadPost().then(() => {
+      setIsLoading(false);
+    });
   }, [loadPost]);
 
   const POSTS = useSelector(state => {
@@ -58,12 +65,20 @@ const Home = ({navigation}) => {
     );
   };
 
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.blue} />
+      </View>
+    );
+  }
+
   return (
     <View>
       <SearchBar value={search} onChangeText={searchHandler} />
 
       {POSTS.length === 0 ? (
-        <View style={styles.centered}>
+        <View style={styles.noPost}>
           <Text>No Posts Found !!!</Text>
         </View>
       ) : (

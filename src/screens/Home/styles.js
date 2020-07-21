@@ -8,9 +8,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.bgGray,
   },
 
-  centered: {
+  noPost: {
     alignItems: 'center',
     marginTop: 20,
+  },
+
+  centered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
