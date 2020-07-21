@@ -7,6 +7,7 @@ import {
   Platform,
   Image,
 } from 'react-native';
+import moment from 'moment';
 import {Avatar} from 'react-native-paper';
 
 import styles from './styles';
@@ -27,7 +28,12 @@ const Card = props => {
         />
         <View style={styles.nameContainer}>
           <Text style={styles.name}>{props.name}</Text>
-          <Text style={styles.time}>{props.time}</Text>
+          <Text style={styles.time}>
+            {moment(
+              moment(props.time * 1000).format('YYYYMMDDkkmmss'),
+              'YYYYMMDDkkmmss',
+            ).fromNow()}
+          </Text>
         </View>
       </View>
 

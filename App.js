@@ -1,6 +1,7 @@
 import React from 'react';
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 import {NavigationContainer} from '@react-navigation/native';
 
 import Root from './src/screens/Root';
@@ -10,7 +11,7 @@ const rootReducer = combineReducers({
   posts: postReducer,
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
 const App = () => {
   return (

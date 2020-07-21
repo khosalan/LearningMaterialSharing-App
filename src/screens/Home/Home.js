@@ -1,13 +1,24 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {View, FlatList, Text} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import styles from './styles';
 import {Card, CardBottom, HeaderButton, SearchBar} from '../../components';
+import * as postActions from '../../store/actions/post';
 
 const Home = ({navigation}) => {
   const [search, setSearch] = useState('');
+
+  const dispatch = useDispatch();
+
+  const loadPost = useCallback(() => {
+    dispatch(postActions.fetchPosts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    loadPost();
+  }, [loadPost]);
 
   const POSTS = useSelector(state => {
     const allPosts = state.posts.allPosts;

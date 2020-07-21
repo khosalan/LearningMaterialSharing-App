@@ -1,6 +1,6 @@
 import POSTS from '../../data/dummy-data';
 
-import {CREATE_POST, TOGGLE_FAVOURITE} from '../actions/post';
+import {CREATE_POST, TOGGLE_FAVOURITE, SET_POSTS} from '../actions/post';
 import Post from '../../models/post';
 
 const initialState = {
@@ -11,12 +11,18 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case SET_POSTS:
+      return {
+        ...state,
+        allPosts: action.posts,
+      };
+
     case CREATE_POST:
       const newPost = new Post(
-        new Date().toISOString(),
+        action.postData.id,
         'u1',
         'Khosalan Ganesan',
-        '1h ago',
+        action.postData.createdAt,
         action.postData.title,
         action.postData.imageUrl,
         action.postData.description,

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Image, Linking} from 'react-native';
+import moment from 'moment';
 import {Avatar} from 'react-native-paper';
 
 import styles from './styles';
@@ -15,7 +16,12 @@ const CardFullView = props => {
         />
         <View style={styles.nameContainer}>
           <Text style={styles.name}>{props.name}</Text>
-          <Text style={styles.time}>{props.time}</Text>
+          <Text style={styles.time}>
+            {moment(
+              moment(props.time * 1000).format('YYYYMMDDkkmmss'),
+              'YYYYMMDDkkmmss',
+            ).fromNow()}
+          </Text>
         </View>
       </View>
 
@@ -33,10 +39,11 @@ const CardFullView = props => {
         <Text style={styles.description}>{props.description}</Text>
 
         <View style={styles.linkContainer}>
-          {props.links.length !== 0 && (
+          {console.log(props.links)}
+          {props.links.length !== 0 && props.links[0] !== '' && (
             <Text style={styles.linkTitle}>Usefull Links</Text>
           )}
-          {props.links
+          {props.links.length !== 0 && props.links[0] !== ''
             ? props.links.map(link => (
                 <Text
                   key={link}
