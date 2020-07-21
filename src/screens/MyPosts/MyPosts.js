@@ -3,6 +3,7 @@ import {View, Text, FlatList} from 'react-native';
 import {useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
+import styles from './styles';
 import {HeaderButton, Card, CardBottom} from '../../components';
 
 const MyPosts = ({navigation}) => {
@@ -34,6 +35,14 @@ const MyPosts = ({navigation}) => {
       </Card>
     );
   };
+
+  if (myPosts.length === 0) {
+    return (
+      <View style={styles.centered}>
+        <Text>You haven't added any posts yet</Text>
+      </View>
+    );
+  }
 
   return (
     <FlatList

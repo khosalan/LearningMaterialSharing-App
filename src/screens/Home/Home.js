@@ -74,7 +74,7 @@ const Home = ({navigation}) => {
   }
 
   return (
-    <View>
+    <View style={{flex: 1}}>
       <SearchBar value={search} onChangeText={searchHandler} />
 
       {POSTS.length === 0 ? (
