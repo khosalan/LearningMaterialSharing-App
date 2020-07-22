@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, FlatList, Text, ActivityIndicator} from 'react-native';
+import {View, FlatList, Text, ActivityIndicator, Alert} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -10,6 +10,7 @@ import * as postActions from '../../store/actions/post';
 
 const Home = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
   const [search, setSearch] = useState('');
 
   const dispatch = useDispatch();
@@ -17,12 +18,21 @@ const Home = ({navigation}) => {
   const loadPost = useCallback(async () => {
     try {
       await dispatch(postActions.fetchPosts());
-    } catch (e) {}
+    } catch (e) {
+      setError(e.message);
+    }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An Error occured', error, [{text: 'Okay'}]);
+    }
+  }, [error]);
 
   useEffect(() => {
     setIsLoading(true);
     loadPost().then(() => {
+      setError(null);
       setIsLoading(false);
     });
   }, [loadPost]);

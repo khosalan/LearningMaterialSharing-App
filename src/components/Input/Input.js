@@ -6,6 +6,7 @@ import {Colors} from '../../utils/constant';
 import styles from './styles';
 
 const Input = props => {
+  //console.log(props);
   return (
     <View style={styles.inputContainer}>
       <Text>{props.label}</Text>
@@ -17,7 +18,7 @@ const Input = props => {
           placeholderTextColor={Colors.darkGray}
         />
       </View>
-      <Text style={styles.error}>{props.error}</Text>
+      {!props.isError && <Text style={styles.error}>{props.error}</Text>}
     </View>
   );
 };

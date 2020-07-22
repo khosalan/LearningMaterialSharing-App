@@ -24,21 +24,17 @@ const CardBottom = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        <TouchableOpacity style={styles.iconButton}>
-          <AntDesign name="like2" size={20} />
-          <Text style={styles.count}>{props.like}</Text>
-        </TouchableOpacity>
+      <View style={styles.buttonContainer}>
+        <View style={styles.iconButton}>
+          <TouchableOpacity>
+            <AntDesign name="like2" size={20} />
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton}>
-          <AntDesign name="dislike2" size={20} />
-          <Text style={styles.count}>{props.dislike}</Text>
-        </TouchableOpacity>
-      </View>
+          <Text style={styles.count}>20</Text>
+        </View>
 
-      <View style={styles.rightContainer}>
         <TouchableOpacity
-          style={styles.commentContainer}
+          style={styles.iconButton}
           onPress={() => props.navigation.navigate('Comments')}>
           <MaterialCommunityIcons name="comment-text-outline" size={20} />
           <View style={styles.comment}>

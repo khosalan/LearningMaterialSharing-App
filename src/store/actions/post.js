@@ -8,28 +8,32 @@ export const TOGGLE_FAVOURITE = 'TOGGLE_FAVOURITE';
 
 export const fetchPosts = () => {
   return async dispatch => {
-    const response = await firestore()
-      .collection('Posts')
-      .get();
+    try {
+      const response = await firestore()
+        .collection('Posts')
+        .get();
 
-    const loadedPosts = [];
+      const loadedPosts = [];
 
-    response.forEach(documentSnapshot =>
-      loadedPosts.push(
-        new Post(
-          documentSnapshot.id,
-          'u1',
-          'Khosalan',
-          documentSnapshot.data().createdAt._seconds,
-          documentSnapshot.data().title,
-          documentSnapshot.data().imageUrl,
-          documentSnapshot.data().description,
-          documentSnapshot.data().links,
+      response.forEach(documentSnapshot =>
+        loadedPosts.push(
+          new Post(
+            documentSnapshot.id,
+            'u1',
+            'Khosalan',
+            documentSnapshot.data().createdAt._seconds,
+            documentSnapshot.data().title,
+            documentSnapshot.data().imageUrl,
+            documentSnapshot.data().description,
+            documentSnapshot.data().links,
+          ),
         ),
-      ),
-    );
+      );
 
-    dispatch({type: SET_POSTS, posts: loadedPosts});
+      dispatch({type: SET_POSTS, posts: loadedPosts});
+    } catch (e) {
+      throw new Error('Something went wrong');
+    }
   };
 };
 

@@ -7,6 +7,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     marginTop: 10,
   },
+
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export default styles;

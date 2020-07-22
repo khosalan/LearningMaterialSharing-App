@@ -1,11 +1,18 @@
-import React, {useState, useReducer} from 'react';
-import {ScrollView, View, Text, Button} from 'react-native';
+import React, {useState, useReducer, useCallback, useEffect} from 'react';
+import {
+  ScrollView,
+  View,
+  Text,
+  Button,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import {HeaderButton, Input} from '../../components';
 import styles from './styles';
+import {Colors} from '../../utils/constant';
 import * as postActions from '../../store/actions/post';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -14,14 +21,29 @@ const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {...state.inputValues, [action.input]: action.value};
 
+    const isValid = action.value.trim().length !== 0 ? true : false;
+
+    const updateValidities = {
+      ...state.inputValidities,
+      [action.input]: isValid,
+    };
+
+    let updatedFormIsValid = true;
+
+    for (let key in updateValidities) {
+      updatedFormIsValid = updatedFormIsValid && updateValidities[key];
+    }
+
     return {
       inputValues: updatedValues,
+      inputValidities: updateValidities,
+      formIsValid: updatedFormIsValid,
     };
   }
   return state;
 };
 
-const AddPost = ({route}) => {
+const AddPost = ({navigation, route}) => {
   const postID = route.params ? route.params.postID : null;
   const editPost = useSelector(state =>
     state.posts.myPosts.find(post => post.id === postID),
@@ -30,6 +52,14 @@ const AddPost = ({route}) => {
   const [input, setInput] = useState(
     editPost ? editPost.links.toString().replace(/,/, `\n`) : '',
   );
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An Error occured', error, [{text: 'Okay'}]);
+    }
+  }, [error]);
 
   const dispatch = useDispatch();
 
@@ -41,24 +71,69 @@ const AddPost = ({route}) => {
     },
 
     inputValidities: {
-      title: false,
-      description: false,
+      title: editPost ? true : false,
+      description: editPost ? true : false,
       imageUrl: true,
       links: true,
     },
 
-    formIsValid: false,
+    formIsValid: editPost ? true : false,
   });
 
   const inputChangeHandler = (inputID, text) => {
     dispatchFormState({type: FORM_INPUT_UPDATE, value: text, input: inputID});
   };
 
+  const submitHandler = useCallback(async () => {
+    if (!formState.formIsValid) {
+      Alert.alert('Wrong Input!', 'Please check the errors in the form', [
+        {text: 'Okay'},
+      ]);
+      return;
+    }
+
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      if (editPost) {
+        console.log('edit post');
+      } else {
+        await dispatch(
+          postActions.createPost(
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl,
+            input.split(/\n/),
+          ),
+        );
+      }
+      navigation.goBack();
+    } catch (e) {
+      setError(e.message);
+    }
+    setIsLoading(false);
+  }, [dispatch, postID, formState]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        {editPost ? (
+          <Text>Saving your Post</Text>
+        ) : (
+          <Text>Creating a new Post</Text>
+        )}
+        <ActivityIndicator size="large" color={Colors.blue} />
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={styles.screen}>
       <Input
         label="Title"
         error="Please enter a title"
+        isError={formState.inputValidities.title}
         placeholder="Enter a title"
         icon="pencil"
         value={formState.inputValues.title}
@@ -68,6 +143,7 @@ const AddPost = ({route}) => {
       <Input
         label="Description"
         error="Please enter desctiption"
+        isError={formState.inputValidities.description}
         placeholder="Enter desctiption"
         multiline
         value={formState.inputValues.description}
@@ -92,19 +168,7 @@ const AddPost = ({route}) => {
 
       {/* {console.log(input)} */}
 
-      <Button
-        title="submit"
-        onPress={() =>
-          dispatch(
-            postActions.createPost(
-              formState.inputValues.title,
-              formState.inputValues.description,
-              formState.inputValues.imageUrl,
-              input.split(/\n/),
-            ),
-          )
-        }
-      />
+      <Button title="submit" onPress={submitHandler} />
       {/* {console.log(formState)} */}
     </ScrollView>
   );
