@@ -1,9 +1,10 @@
-import firestore from '@react-native-firebase/firestore';
+import firestore, {firebase} from '@react-native-firebase/firestore';
 import Post from '../../models/post';
 
 export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const SET_POSTS = 'SET_POSTS';
+export const UPDATE_POST = 'UPDATE_POST';
 export const TOGGLE_FAVOURITE = 'TOGGLE_FAVOURITE';
 
 export const fetchPosts = () => {
@@ -60,6 +61,40 @@ export const createPost = (title, description, imageUrl, links) => {
           imageUrl,
           links,
           createdAt: resData.data().createdAt._seconds,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+      throw new Error(e);
+    }
+  };
+};
+
+export const updatePost = (id, title, description, imageUrl, links) => {
+  return async dispatch => {
+    console.log(links);
+    try {
+      const response = await firestore()
+        .collection('Posts')
+        .doc(id)
+        .update({
+          title,
+          description,
+          imageUrl,
+          links,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+        });
+
+      // const resData = await response.get();
+
+      dispatch({
+        type: UPDATE_POST,
+        postData: {
+          id,
+          title,
+          description,
+          imageUrl,
+          links,
         },
       });
     } catch (e) {

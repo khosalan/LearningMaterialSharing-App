@@ -5,6 +5,7 @@ import {
   TOGGLE_FAVOURITE,
   SET_POSTS,
   DELETE_POST,
+  UPDATE_POST,
 } from '../actions/post';
 import Post from '../../models/post';
 
@@ -39,6 +40,34 @@ export default (state = initialState, action) => {
         ...state,
         allPosts: state.allPosts.concat(newPost),
         myPosts: state.myPosts.concat(newPost),
+      };
+
+    case UPDATE_POST:
+      const postID = state.myPosts.findIndex(
+        post => post.id === action.postData.id,
+      );
+
+      const updatedPost = new Post(
+        action.postData.id,
+        state.myPosts[postID].ownerId,
+        state.myPosts[postID].ownerName,
+        state.myPosts[postID].time,
+        action.postData.title,
+        action.postData.imageUrl,
+        action.postData.description,
+        action.postData.links,
+      );
+
+      const updateMyPosts = [...state.myPosts];
+      updateMyPosts[postID] = updatedPost;
+
+      const updateAllPosts = [...state.allPosts];
+      updateAllPosts[postID] = updatedPost;
+
+      return {
+        ...state,
+        allPosts: updateAllPosts,
+        myPosts: updateAllPosts,
       };
 
     case DELETE_POST:

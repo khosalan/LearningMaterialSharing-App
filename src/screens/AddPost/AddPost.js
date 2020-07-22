@@ -97,7 +97,15 @@ const AddPost = ({navigation, route}) => {
 
     try {
       if (editPost) {
-        console.log('edit post');
+        await dispatch(
+          postActions.updatePost(
+            postID,
+            formState.inputValues.title,
+            formState.inputValues.description,
+            formState.inputValues.imageUrl,
+            input.split(/\n/),
+          ),
+        );
       } else {
         await dispatch(
           postActions.createPost(
@@ -113,7 +121,7 @@ const AddPost = ({navigation, route}) => {
       setError(e.message);
     }
     setIsLoading(false);
-  }, [dispatch, postID, formState]);
+  }, [dispatch, postID, formState, input]);
 
   if (isLoading) {
     return (
@@ -138,6 +146,7 @@ const AddPost = ({navigation, route}) => {
         icon="pencil"
         value={formState.inputValues.title}
         onChangeText={inputChangeHandler.bind(this, 'title')}
+        autocorrect={false}
       />
 
       <Input
@@ -148,6 +157,7 @@ const AddPost = ({navigation, route}) => {
         multiline
         value={formState.inputValues.description}
         onChangeText={inputChangeHandler.bind(this, 'description')}
+        autocorrect={false}
       />
 
       <Input
@@ -156,6 +166,8 @@ const AddPost = ({navigation, route}) => {
         icon="image"
         value={formState.inputValues.imageUrl}
         onChangeText={inputChangeHandler.bind(this, 'imageUrl')}
+        autocorrect={false}
+        autoCapitalize="none"
       />
 
       <Input
@@ -164,6 +176,8 @@ const AddPost = ({navigation, route}) => {
         multiline
         value={input}
         onChangeText={text => setInput(text)}
+        autocorrect={false}
+        autoCapitalize="none"
       />
 
       {/* {console.log(input)} */}
