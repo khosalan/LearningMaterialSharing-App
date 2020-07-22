@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 // import {Favourites} from '..';
 import {Colors} from '../../utils/constant';
+import AuthNavigation from '../Navigations/AuthNavigation';
 import HomeNavigation from '../Navigations/HomeNavigation';
 import FavouritesNavigation from '../Navigations/FavouritesNavigation';
 import MyPostsNavigation from '../Navigations/MyPostsNavigation';
@@ -41,6 +42,8 @@ const HomeNavigator = () => {
         }}
       />
     </Tab.Navigator>
+
+    // <AuthNavigation />
   );
 };
 
