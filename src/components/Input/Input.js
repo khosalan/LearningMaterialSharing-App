@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Colors} from '../../utils/constant';
@@ -17,6 +17,11 @@ const Input = props => {
           style={styles.input}
           placeholderTextColor={Colors.darkGray}
         />
+        {props.rightIcon && (
+          <TouchableOpacity onPress={props.clickRight}>
+            <Icon name={props.rightIcon} style={styles.icon} />
+          </TouchableOpacity>
+        )}
       </View>
       {!props.isError && <Text style={styles.error}>{props.error}</Text>}
     </View>

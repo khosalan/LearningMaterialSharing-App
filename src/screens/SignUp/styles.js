@@ -4,7 +4,7 @@ import {Colors} from '../../utils/constant';
 
 const styles = StyleSheet.create({
   inputContainer: {
-    marginTop: 20,
+    margin: 20,
   },
 
   textInput: {
@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
 
   createButton: {
     marginTop: 25,
+  },
+
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

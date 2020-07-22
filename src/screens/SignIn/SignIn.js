@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
-import {Input, Button} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ScrollView, View, Text, TouchableOpacity, Button} from 'react-native';
 
 import styles from './styles';
 import {Colors} from '../../utils/constant';
+import {Input} from '../../components';
 
 const SignIn = ({navigation}) => {
   const [secure, setSecure] = useState(true);
@@ -23,7 +22,7 @@ const SignIn = ({navigation}) => {
         <Input
           placeholder="Email address"
           label="Email Address"
-          leftIcon={<Icon name="email" size={24} color="black" />}
+          icon="email"
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
@@ -32,15 +31,12 @@ const SignIn = ({navigation}) => {
         <Input
           placeholder="Password"
           label="Password"
-          leftIcon={<Icon name="lock" size={24} color="black" />}
+          icon="lock"
+          rightIcon={secure ? 'eye-off' : 'eye'}
+          clickRight={handleEyeClick}
           autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry={secure}
-          rightIcon={
-            <TouchableOpacity onPress={handleEyeClick}>
-              <Icon name={secure ? 'eye-off' : 'eye'} size={24} color="black" />
-            </TouchableOpacity>
-          }
         />
 
         <TouchableOpacity style={styles.forgotContainer} onPress={() => {}}>
@@ -49,16 +45,12 @@ const SignIn = ({navigation}) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button
-          title="SIGN IN"
-          buttonStyle={{backgroundColor: Colors.blue}}
-          onPress={() => {}}
-        />
+        <Button title="SIGN IN" color={Colors.blue} onPress={() => {}} />
 
         <View style={styles.createButton}>
           <Button
             title="CREATE AN ACCOUNT"
-            buttonStyle={{backgroundColor: Colors.lightRed}}
+            color={Colors.lightRed}
             onPress={() => navigation.navigate('SignUp')}
           />
         </View>

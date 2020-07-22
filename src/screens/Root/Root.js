@@ -16,34 +16,34 @@ import {Profile, screenOptions as profileScreenOptions} from '../Profile';
 const HomeNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      tabBarOptions={{
-        activeTintColor: Colors.red,
-      }}>
-      <Tab.Screen
-        name="Home"
-        component={HomeNavigation}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="md-home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Favourites"
-        component={FavouritesNavigation}
-        options={{
-          tabBarLabel: 'Favourites',
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="md-star" color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+    // <Tab.Navigator
+    //   initialRouteName="Home"
+    //   tabBarOptions={{
+    //     activeTintColor: Colors.red,
+    //   }}>
+    //   <Tab.Screen
+    //     name="Home"
+    //     component={HomeNavigation}
+    //     options={{
+    //       tabBarLabel: 'Home',
+    //       tabBarIcon: ({color, size}) => (
+    //         <Ionicons name="md-home" color={color} size={size} />
+    //       ),
+    //     }}
+    //   />
+    //   <Tab.Screen
+    //     name="Favourites"
+    //     component={FavouritesNavigation}
+    //     options={{
+    //       tabBarLabel: 'Favourites',
+    //       tabBarIcon: ({color, size}) => (
+    //         <Ionicons name="md-star" color={color} size={size} />
+    //       ),
+    //     }}
+    //   />
+    // </Tab.Navigator>
 
-    // <AuthNavigation />
+    <AuthNavigation />
   );
 };
 
