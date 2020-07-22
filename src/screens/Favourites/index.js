@@ -1,3 +1,3 @@
-import Favourites from './Favourites';
+import Favourites, {screenOptions} from './Favourites';
 
-export default Favourites;
+export {Favourites, screenOptions};

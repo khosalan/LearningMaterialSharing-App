@@ -7,6 +7,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.bgGray,
   },
+
+  noPost: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+
+  centered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

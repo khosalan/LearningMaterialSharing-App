@@ -1,4 +1,4 @@
-package com.learningmaterialsharingapp;
+package com.khosalan.learningmaterialsharingapp;
 
 import com.facebook.react.ReactActivity;
 

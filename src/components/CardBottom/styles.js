@@ -15,31 +15,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  leftContainer: {
-    flex: 2,
+  buttonContainer: {
     flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-between',
   },
 
   iconButton: {
-    marginRight: 25,
     flexDirection: 'row',
     alignItems: 'center',
   },
 
   count: {
     marginLeft: 10,
-  },
-
-  rightContainer: {
-    flex: 3,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
-  commentContainer: {
-    marginLeft: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
+    padding: 5,
   },
 
   comment: {

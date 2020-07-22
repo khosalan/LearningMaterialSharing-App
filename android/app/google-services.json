@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "893723069128",
+    "firebase_url": "https://sharing-app-6862b.firebaseio.com",
+    "project_id": "sharing-app-6862b",
+    "storage_bucket": "sharing-app-6862b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893723069128:android:68f0710fc0d7e5310a33fd",
+        "android_client_info": {
+          "package_name": "com.khosalan.learningmaterialsharingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893723069128-pv25d4rtlvgitjskheb1beq0uujtv9cm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSa1zXMXnA_FRFokl7vV2huOsU0gw5VIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "893723069128-pv25d4rtlvgitjskheb1beq0uujtv9cm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
