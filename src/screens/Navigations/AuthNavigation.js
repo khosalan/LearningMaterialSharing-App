@@ -1,6 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-// import {SignUp, SignIn} from '..';
+
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 
@@ -25,12 +27,29 @@ const AuthNavigation = () => {
       <Stack.Screen
         name="SignIn"
         component={SignIn}
-        options={{title: 'SIGN IN'}}
+        options={{
+          title: 'SIGN IN',
+          headerRight: () => (
+            <MaterialCommunityIcons
+              name="login"
+              style={{fontSize: 26, color: Colors.white, marginRight: 15}}
+            />
+          ),
+        }}
       />
       <Stack.Screen
         name="SignUp"
         component={SignUp}
-        options={{title: 'SIGN UP', headerLeft: null}}
+        options={{
+          title: 'SIGN UP',
+          headerLeft: null,
+          headerRight: () => (
+            <MaterialCommunityIcons
+              name="account-plus"
+              style={{fontSize: 26, color: Colors.white, marginRight: 15}}
+            />
+          ),
+        }}
       />
     </Stack.Navigator>
   );

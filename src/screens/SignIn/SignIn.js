@@ -1,12 +1,120 @@
-import React, {useState} from 'react';
-import {ScrollView, View, Text, TouchableOpacity, Button} from 'react-native';
+import React, {useState, useReducer, useCallback, useEffect} from 'react';
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  Button,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import {useDispatch} from 'react-redux';
 
 import styles from './styles';
 import {Colors} from '../../utils/constant';
 import {Input} from '../../components';
+import {signIn} from '../../store/actions/auth';
+
+const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
+
+const formReducer = (state, action) => {
+  if (action.type === FORM_INPUT_UPDATE) {
+    const updatedValues = {...state.inputValues, [action.input]: action.value};
+
+    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let isValid = true;
+
+    if (
+      action.input === 'email' &&
+      !emailRegex.test(action.value.toLowerCase())
+    ) {
+      isValid = false;
+    }
+
+    if (action.input === 'password' && action.value.length < 6) {
+      isValid = false;
+    }
+
+    const updateValidities = {
+      ...state.inputValidities,
+      [action.input]: isValid,
+    };
+
+    let updatedFormIsValid = true;
+
+    for (let key in updateValidities) {
+      updatedFormIsValid = updatedFormIsValid && updateValidities[key];
+    }
+
+    return {
+      inputValues: updatedValues,
+      inputValidities: updateValidities,
+      formIsValid: updatedFormIsValid,
+    };
+  }
+  return state;
+};
 
 const SignIn = ({navigation}) => {
   const [secure, setSecure] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('An Error occured', error, [{text: 'Okay'}]);
+    }
+  }, [error]);
+
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    inputValues: {
+      email: '',
+      password: '',
+    },
+
+    inputValidities: {
+      email: false,
+      password: false,
+    },
+
+    formIsValid: false,
+  });
+
+  const inputChangeHandler = (inputID, text) => {
+    dispatchFormState({type: FORM_INPUT_UPDATE, value: text, input: inputID});
+  };
+
+  const handleSinIn = useCallback(async () => {
+    if (!formState.formIsValid) {
+      Alert.alert('Wrong Input!', 'Please check the errors in the form', [
+        {text: 'Okay'},
+      ]);
+      return;
+    }
+
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      await dispatch(
+        signIn(formState.inputValues.email, formState.inputValues.password),
+      );
+    } catch (e) {
+      setError(e.message);
+    }
+    setIsLoading(false);
+  }, [dispatch, formState]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <Text>Please Wait</Text>
+        <ActivityIndicator size="large" color={Colors.blue} />
+      </View>
+    );
+  }
 
   const handleEyeClick = () => {
     if (secure) {
@@ -26,6 +134,10 @@ const SignIn = ({navigation}) => {
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
+          error="Please enter a valid email address"
+          value={formState.inputValues.email}
+          onChangeText={inputChangeHandler.bind(this, 'email')}
+          isError={formState.inputValidities.email}
         />
 
         <Input
@@ -37,6 +149,10 @@ const SignIn = ({navigation}) => {
           autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry={secure}
+          error="Please enter a password with atleast 6 characters"
+          value={formState.inputValues.password}
+          onChangeText={inputChangeHandler.bind(this, 'password')}
+          isError={formState.inputValidities.password}
         />
 
         <TouchableOpacity style={styles.forgotContainer} onPress={() => {}}>
@@ -45,7 +161,7 @@ const SignIn = ({navigation}) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button title="SIGN IN" color={Colors.blue} onPress={() => {}} />
+        <Button title="SIGN IN" color={Colors.blue} onPress={handleSinIn} />
 
         <View style={styles.createButton}>
           <Button

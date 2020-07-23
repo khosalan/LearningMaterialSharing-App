@@ -213,7 +213,7 @@ const SignUp = ({navigation}) => {
         <View style={styles.buttonContainer}>
           <Button title="SIGN UP" color={Colors.blue} onPress={handleSinUp} />
 
-          <View style={styles.createButton}>
+          <View style={styles.alreadyButton}>
             <Button
               title="ALREADY HAVE AN ACCOUNT"
               color={Colors.lightRed}

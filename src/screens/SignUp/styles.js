@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
 
-  createButton: {
+  alreadyButton: {
     marginTop: 25,
   },
 

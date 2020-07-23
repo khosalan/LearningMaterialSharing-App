@@ -5,6 +5,7 @@ import {Colors} from '../../utils/constant';
 const styles = StyleSheet.create({
   inputContainer: {
     margin: 20,
+    marginBottom: 15,
   },
 
   textInput: {
@@ -24,11 +25,17 @@ const styles = StyleSheet.create({
 
   buttonContainer: {
     marginHorizontal: 15,
-    marginTop: 20,
+    marginTop: 10,
   },
 
   createButton: {
     marginTop: 25,
+  },
+
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
