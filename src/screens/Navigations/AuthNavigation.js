@@ -1,11 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
-
 import {Colors} from '../../utils/constant';
 
 const AuthNavigation = () => {

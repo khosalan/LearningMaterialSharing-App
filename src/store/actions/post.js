@@ -8,7 +8,8 @@ export const UPDATE_POST = 'UPDATE_POST';
 export const TOGGLE_FAVOURITE = 'TOGGLE_FAVOURITE';
 
 export const fetchPosts = () => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const userID = getState().auth.userID;
     try {
       const response = await firestore()
         .collection('Posts')
@@ -20,7 +21,7 @@ export const fetchPosts = () => {
         loadedPosts.push(
           new Post(
             documentSnapshot.id,
-            'u1',
+            documentSnapshot.data().owner,
             'Khosalan',
             documentSnapshot.data().createdAt._seconds,
             documentSnapshot.data().title,
@@ -30,16 +31,24 @@ export const fetchPosts = () => {
           ),
         ),
       );
+      console.log(loadedPosts);
 
-      dispatch({type: SET_POSTS, posts: loadedPosts});
+      dispatch({
+        type: SET_POSTS,
+        posts: loadedPosts,
+        myPosts: loadedPosts.filter(post => post.owner === userID),
+      });
     } catch (e) {
+      console.log(e);
       throw new Error('Something went wrong');
     }
   };
 };
 
 export const createPost = (title, description, imageUrl, links) => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const owner = getState().auth.userID;
+
     try {
       const response = await firestore()
         .collection('Posts')
@@ -49,6 +58,7 @@ export const createPost = (title, description, imageUrl, links) => {
           imageUrl,
           links,
           createdAt: firestore.FieldValue.serverTimestamp(),
+          owner,
         });
       const resData = await response.get();
 
@@ -61,6 +71,7 @@ export const createPost = (title, description, imageUrl, links) => {
           imageUrl,
           links,
           createdAt: resData.data().createdAt._seconds,
+          owner,
         },
       });
     } catch (e) {

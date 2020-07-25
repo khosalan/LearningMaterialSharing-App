@@ -124,8 +124,8 @@ const SignUp = ({navigation}) => {
       );
     } catch (e) {
       setError(e.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [dispatch, formState]);
 
   const handleEyeClick = () => {

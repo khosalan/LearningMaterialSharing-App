@@ -21,13 +21,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allPosts: action.posts,
-        myPosts: action.posts.filter(post => post.ownerId === 'u1'),
+        myPosts: action.myPosts,
       };
 
     case CREATE_POST:
       const newPost = new Post(
         action.postData.id,
-        'u1',
+        action.postData.owner,
         'Khosalan',
         action.postData.createdAt,
         action.postData.title,

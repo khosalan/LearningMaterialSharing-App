@@ -103,8 +103,8 @@ const SignIn = ({navigation}) => {
       );
     } catch (e) {
       setError(e.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [dispatch, formState]);
 
   if (isLoading) {

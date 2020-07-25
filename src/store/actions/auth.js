@@ -12,11 +12,12 @@ export const signUp = (firstName, lastName, regNo, email, password) => {
         password,
       );
 
-      const id = await auth().currentUser.getIdToken();
+      const token = await auth().currentUser.getIdToken();
+      const userID = auth().currentUser.uid;
 
-      const user = await firestore()
+      await firestore()
         .collection('Users')
-        .doc(auth().currentUser.uid)
+        .doc(userID)
         .set({
           firstName,
           lastName,
@@ -24,7 +25,7 @@ export const signUp = (firstName, lastName, regNo, email, password) => {
           email,
         });
 
-      dispatch({type: SIGN_UP});
+      dispatch({type: SIGN_UP, token, userID});
     } catch (e) {
       if (e.code === 'auth/email-already-in-use') {
         throw new Error(
@@ -45,10 +46,10 @@ export const signIn = (email, password) => {
     try {
       const response = await auth().signInWithEmailAndPassword(email, password);
 
-      const id = await auth().currentUser.getIdToken();
-      console.log(response, id);
+      const token = await auth().currentUser.getIdToken();
+      const userID = auth().currentUser.uid;
 
-      dispatch({type: SIGN_IN});
+      dispatch({type: SIGN_IN, token, userID});
     } catch (e) {
       if (
         e.code === 'auth/user-not-found' ||
