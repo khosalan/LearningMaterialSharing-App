@@ -4,18 +4,25 @@ import {Colors} from '../../utils/constant';
 
 const styles = StyleSheet.create({
   deleteContainer: {
-    alignSelf: 'center',
+    marginLeft: 10,
+    marginBottom: 20,
   },
 
   deleteText: {
     color: Colors.red,
-    fontSize: 18,
+    fontSize: 15,
+    marginTop: 5,
   },
 
   centered: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  advanced: {
+    fontSize: 16,
+    marginBottom: 3,
   },
 });
 

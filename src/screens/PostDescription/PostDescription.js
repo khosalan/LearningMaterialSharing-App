@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Divider} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 
 import styles from './styles';
@@ -75,11 +76,13 @@ const PostDescription = ({navigation, route}) => {
       )}
 
       {route.params.editable && (
-        <TouchableOpacity
-          style={styles.deleteContainer}
-          onPress={deleteHandler}>
-          <Text style={styles.deleteText}>Delete Post</Text>
-        </TouchableOpacity>
+        <View style={styles.deleteContainer}>
+          <Text style={styles.advanced}>Advanced</Text>
+          <Divider />
+          <TouchableOpacity onPress={deleteHandler}>
+            <Text style={styles.deleteText}>Delete this post</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </ScrollView>
   );

@@ -1,7 +1,7 @@
 class Post {
   constructor(
     id,
-    ownerId,
+    owner,
     ownerName,
     time,
     title,
@@ -13,7 +13,7 @@ class Post {
     comment,
   ) {
     this.id = id;
-    this.ownerId = ownerId;
+    this.owner = owner;
     this.ownerName = ownerName;
     this.time = time;
     this.title = title;

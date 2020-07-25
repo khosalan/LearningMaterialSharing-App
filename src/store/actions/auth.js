@@ -7,10 +7,7 @@ export const SIGN_IN = 'SIGN_IN';
 export const signUp = (firstName, lastName, regNo, email, password) => {
   return async dispatch => {
     try {
-      const response = await auth().createUserWithEmailAndPassword(
-        email,
-        password,
-      );
+      await auth().createUserWithEmailAndPassword(email, password);
 
       const token = await auth().currentUser.getIdToken();
       const userID = auth().currentUser.uid;
@@ -25,7 +22,7 @@ export const signUp = (firstName, lastName, regNo, email, password) => {
           email,
         });
 
-      dispatch({type: SIGN_UP, token, userID});
+      dispatch({type: SIGN_UP, token, userID, firstName, lastName});
     } catch (e) {
       if (e.code === 'auth/email-already-in-use') {
         throw new Error(
@@ -44,12 +41,23 @@ export const signUp = (firstName, lastName, regNo, email, password) => {
 export const signIn = (email, password) => {
   return async dispatch => {
     try {
-      const response = await auth().signInWithEmailAndPassword(email, password);
+      await auth().signInWithEmailAndPassword(email, password);
 
       const token = await auth().currentUser.getIdToken();
       const userID = auth().currentUser.uid;
 
-      dispatch({type: SIGN_IN, token, userID});
+      const user = await firestore()
+        .collection('Users')
+        .doc(userID)
+        .get();
+
+      dispatch({
+        type: SIGN_IN,
+        token,
+        userID,
+        firstName: user.data().firstName,
+        lastName: user.data().lastName,
+      });
     } catch (e) {
       if (
         e.code === 'auth/user-not-found' ||

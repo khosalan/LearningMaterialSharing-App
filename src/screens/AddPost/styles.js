@@ -4,8 +4,9 @@ import {Colors} from '../../utils/constant';
 
 const styles = StyleSheet.create({
   screen: {
-    marginHorizontal: 15,
+    paddingHorizontal: 15,
     marginTop: 10,
+    marginBottom: 15,
   },
 
   centered: {

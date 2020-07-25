@@ -6,6 +6,7 @@ import {
   SET_POSTS,
   DELETE_POST,
   UPDATE_POST,
+  MY_POSTS,
 } from '../actions/post';
 import Post from '../../models/post';
 
@@ -21,6 +22,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allPosts: action.posts,
+      };
+
+    case MY_POSTS:
+      return {
+        ...state,
         myPosts: action.myPosts,
       };
 
@@ -28,7 +34,7 @@ export default (state = initialState, action) => {
       const newPost = new Post(
         action.postData.id,
         action.postData.owner,
-        'Khosalan',
+        action.postData.ownerName,
         action.postData.createdAt,
         action.postData.title,
         action.postData.imageUrl,

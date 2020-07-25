@@ -78,6 +78,7 @@ const Home = ({navigation}) => {
   if (isLoading) {
     return (
       <View style={styles.centered}>
+        <Text>Loading</Text>
         <ActivityIndicator size="large" color={Colors.blue} />
       </View>
     );
