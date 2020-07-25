@@ -1,14 +1,8 @@
 import React, {useState, useReducer, useCallback, useEffect} from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Button,
-  Alert,
-  ActivityIndicator,
-} from 'react-native';
+import {ScrollView, View, Text, Alert, ActivityIndicator} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Button} from 'react-native-paper';
 
 import {HeaderButton, Input} from '../../components';
 import styles from './styles';
@@ -180,10 +174,13 @@ const AddPost = ({navigation, route}) => {
         autoCapitalize="none"
       />
 
-      {/* {console.log(input)} */}
-
-      <Button title="submit" onPress={submitHandler} />
-      {/* {console.log(formState)} */}
+      <Button
+        mode="contained"
+        onPress={submitHandler}
+        color={Colors.blue}
+        disabled={!formState.formIsValid}>
+        {editPost ? 'Edit post' : 'Add post'}
+      </Button>
     </ScrollView>
   );
 };
@@ -192,16 +189,6 @@ export const screenOptions = ({route}) => {
   const postID = route.params ? route.params.postID : null;
   return {
     headerTitle: postID ? 'Edit a Post' : 'Create a Post',
-
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title="Add"
-          iconName="md-checkmark-circle"
-          onPress={() => console.log('Pressed')}
-        />
-      </HeaderButtons>
-    ),
   };
 };
 

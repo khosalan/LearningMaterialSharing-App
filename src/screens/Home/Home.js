@@ -18,6 +18,7 @@ const Home = ({navigation}) => {
   const loadPost = useCallback(async () => {
     try {
       await dispatch(postActions.fetchPosts());
+      await dispatch(postActions.fetchFavourites());
     } catch (e) {
       setError(e.message);
     }

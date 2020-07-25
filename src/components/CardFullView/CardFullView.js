@@ -32,6 +32,7 @@ const CardFullView = props => {
               uri: props.imageUrl,
             }}
             style={styles.image}
+            resizeMode="contain"
           />
         ) : null}
         <Text style={styles.title}>{props.title}</Text>

@@ -25,22 +25,26 @@ const CardBottom = props => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <View style={styles.iconButton}>
-          <TouchableOpacity>
-            <AntDesign name="like2" size={20} />
-          </TouchableOpacity>
+        {!props.isFav ? (
+          <View style={styles.iconButton}>
+            <TouchableOpacity>
+              <AntDesign name="like2" size={20} />
+            </TouchableOpacity>
 
-          <Text style={styles.count}>20</Text>
-        </View>
-
-        <TouchableOpacity
-          style={styles.iconButton}
-          onPress={() => props.navigation.navigate('Comments')}>
-          <MaterialCommunityIcons name="comment-text-outline" size={20} />
-          <View style={styles.comment}>
-            <Text>Comment</Text>
+            <Text style={styles.count}>20</Text>
           </View>
-        </TouchableOpacity>
+        ) : null}
+
+        {!props.isFav ? (
+          <TouchableOpacity
+            style={styles.iconButton}
+            onPress={() => props.navigation.navigate('Comments')}>
+            <MaterialCommunityIcons name="comment-text-outline" size={20} />
+            <View style={styles.comment}>
+              <Text>Comment</Text>
+            </View>
+          </TouchableOpacity>
+        ) : null}
 
         <TouchableOpacity style={styles.favButton} onPress={handleFavourite}>
           <Ionicons name={isFav ? 'md-star' : 'md-star-outline'} size={20} />

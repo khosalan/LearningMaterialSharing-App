@@ -7,6 +7,7 @@ import {
   DELETE_POST,
   UPDATE_POST,
   MY_POSTS,
+  FAVOURITE_POST,
 } from '../actions/post';
 import Post from '../../models/post';
 
@@ -28,6 +29,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         myPosts: action.myPosts,
+      };
+
+    case FAVOURITE_POST:
+      return {
+        ...state,
+        favouritePosts: action.favouritePosts,
       };
 
     case CREATE_POST:
