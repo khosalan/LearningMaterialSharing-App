@@ -19,8 +19,11 @@ import * as postActions from '../../store/actions/post';
 
 const PostDescription = ({navigation, route}) => {
   const postID = route.params.postID;
+  const isFav = route.params.isFav;
   const post = useSelector(state =>
-    state.posts.allPosts.find(post => post.id === postID),
+    isFav
+      ? state.posts.favouritePosts.find(post => post.id === postID)
+      : state.posts.allPosts.find(post => post.id === postID),
   );
 
   const dispatch = useDispatch();

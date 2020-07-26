@@ -10,7 +10,11 @@ const Favourites = ({navigation}) => {
   const favPosts = useSelector(state => state.posts.favouritePosts);
 
   const onSelectPostHandler = (id, title) => {
-    navigation.navigate('Description', {postID: id, postTitle: title});
+    navigation.navigate('Description', {
+      postID: id,
+      postTitle: title,
+      isFav: true,
+    });
   };
 
   const renderItem = ({item}) => {
