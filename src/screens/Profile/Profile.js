@@ -1,13 +1,25 @@
 import React from 'react';
-import {View, ScrollView, TouchableOpacity} from 'react-native';
+import {View, ScrollView, TouchableOpacity, Alert} from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {Avatar, Text, Divider} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
 
 import {HeaderButton} from '../../components';
 import styles from './styles';
 
 const Profile = () => {
+  const firstName = useSelector(state => state.auth.firstName);
+  const lastName = useSelector(state => state.auth.lastName);
+  const regNo = useSelector(state => state.auth.regNo);
+
+  const deleteHandler = () => {
+    Alert.alert('Are your sure', 'Do you really want to delte your account?', [
+      {text: 'Yes'},
+      {text: 'No', style: 'cancel'},
+    ]);
+  };
+
   return (
     <ScrollView>
       <TouchableOpacity style={styles.image}>
@@ -20,17 +32,17 @@ const Profile = () => {
       <View style={styles.container}>
         <View style={styles.infoContainer}>
           <Text style={styles.label}>First name</Text>
-          <Text style={styles.info}>Khosalan</Text>
+          <Text style={styles.info}>{firstName}</Text>
         </View>
 
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Last name</Text>
-          <Text style={styles.info}>Ganesan</Text>
+          <Text style={styles.info}>{lastName}</Text>
         </View>
 
         <View style={styles.infoContainer}>
           <Text style={styles.label}>Registration No</Text>
-          <Text style={styles.info}>2017cs085</Text>
+          <Text style={styles.info}>{regNo}</Text>
         </View>
       </View>
 
@@ -50,6 +62,15 @@ const Profile = () => {
           </View>
           <MaterialCommunityIcons name="pencil" style={styles.icon} />
         </TouchableOpacity>
+
+        <Divider />
+
+        <View style={styles.deleteContainer}>
+          <Text style={styles.editableLabel}>Advanced</Text>
+          <Text style={styles.deleteText} onPress={deleteHandler}>
+            Delete account
+          </Text>
+        </View>
       </View>
     </ScrollView>
   );

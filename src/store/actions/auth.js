@@ -1,8 +1,24 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 
-export const SIGN_UP = 'SIGN_UP';
-export const SIGN_IN = 'SIGN_IN';
+export const AUTHENTICATE = 'AUTHENTICATE';
+export const TRY_AUTO_LOGIN = 'TRY_AUTO_LOGIN';
+
+export const tryAutoLogin = () => {
+  return {type: TRY_AUTO_LOGIN};
+};
+
+export const authenticate = (
+  userID,
+  token,
+  firstName,
+  lastName,
+  regNo,
+  email,
+) => {
+  return {type: AUTHENTICATE, userID, token, firstName, lastName, regNo, email};
+};
 
 export const signUp = (firstName, lastName, regNo, email, password) => {
   return async dispatch => {
@@ -22,7 +38,8 @@ export const signUp = (firstName, lastName, regNo, email, password) => {
           email,
         });
 
-      dispatch({type: SIGN_UP, token, userID, firstName, lastName});
+      dispatch(authenticate(userID, token, firstName, lastName, regNo, email));
+      saveDataToStorage(token, userID, firstName, lastName, regNo, email);
     } catch (e) {
       if (e.code === 'auth/email-already-in-use') {
         throw new Error(
@@ -45,19 +62,31 @@ export const signIn = (email, password) => {
 
       const token = await auth().currentUser.getIdToken();
       const userID = auth().currentUser.uid;
+      console.log(auth());
 
       const user = await firestore()
         .collection('Users')
         .doc(userID)
         .get();
 
-      dispatch({
-        type: SIGN_IN,
+      dispatch(
+        authenticate(
+          userID,
+          token,
+          user.data().firstName,
+          user.data().lastName,
+          user.data().regNo,
+          email,
+        ),
+      );
+      saveDataToStorage(
         token,
         userID,
-        firstName: user.data().firstName,
-        lastName: user.data().lastName,
-      });
+        user.data().firstName,
+        user.data().lastName,
+        user.data().regNo,
+        email,
+      );
     } catch (e) {
       if (
         e.code === 'auth/user-not-found' ||
@@ -72,4 +101,18 @@ export const signIn = (email, password) => {
       throw e;
     }
   };
+};
+
+const saveDataToStorage = (
+  token,
+  userID,
+  firstName,
+  lastName,
+  regNo,
+  email,
+) => {
+  AsyncStorage.setItem(
+    'userData',
+    JSON.stringify({token, userID, firstName, lastName, regNo, email}),
+  );
 };

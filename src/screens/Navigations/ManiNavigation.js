@@ -1,15 +1,22 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useDispatch} from 'react-redux';
 
 import {Colors} from '../../utils/constant';
 import HomeNavigation from '../Navigations/HomeNavigation';
 import FavouritesNavigation from '../Navigations/FavouritesNavigation';
 import MyPostsNavigation from '../Navigations/MyPostsNavigation';
 import {Profile, screenOptions as profileScreenOptions} from '../Profile';
+import {View} from 'react-native';
 
 const HomeNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -64,9 +71,28 @@ const ProfileNavigator = () => {
 };
 
 const MainNavigation = () => {
+  const dispatch = useDispatch();
   const Drawer = createDrawerNavigator();
   return (
-    <Drawer.Navigator drawerContentOptions={{activeTintColor: Colors.red}}>
+    <Drawer.Navigator
+      drawerContentOptions={{activeTintColor: Colors.red}}
+      initialRouteName="Home"
+      drawerContent={props => (
+        <DrawerContentScrollView>
+          <DrawerItemList {...props} />
+
+          <DrawerItem
+            label="Log Out"
+            icon={props => (
+              <MaterialCommunityIcons
+                name="logout"
+                size={24}
+                color={props.color}
+              />
+            )}
+          />
+        </DrawerContentScrollView>
+      )}>
       <Drawer.Screen
         name="Home"
         component={HomeNavigator}
