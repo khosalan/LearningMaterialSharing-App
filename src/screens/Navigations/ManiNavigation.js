@@ -16,7 +16,7 @@ import HomeNavigation from '../Navigations/HomeNavigation';
 import FavouritesNavigation from '../Navigations/FavouritesNavigation';
 import MyPostsNavigation from '../Navigations/MyPostsNavigation';
 import {Profile, screenOptions as profileScreenOptions} from '../Profile';
-import {View} from 'react-native';
+import {logout} from '../../store/actions/auth';
 
 const HomeNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -83,6 +83,7 @@ const MainNavigation = () => {
 
           <DrawerItem
             label="Log Out"
+            onPress={() => dispatch(logout())}
             icon={props => (
               <MaterialCommunityIcons
                 name="logout"

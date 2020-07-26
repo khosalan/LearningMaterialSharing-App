@@ -4,6 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const TRY_AUTO_LOGIN = 'TRY_AUTO_LOGIN';
+export const LOG_OUT = 'LOG_OUT';
 
 export const tryAutoLogin = () => {
   return {type: TRY_AUTO_LOGIN};
@@ -62,7 +63,6 @@ export const signIn = (email, password) => {
 
       const token = await auth().currentUser.getIdToken();
       const userID = auth().currentUser.uid;
-      console.log(auth());
 
       const user = await firestore()
         .collection('Users')
@@ -100,6 +100,14 @@ export const signIn = (email, password) => {
       }
       throw e;
     }
+  };
+};
+
+export const logout = () => {
+  return async dispatch => {
+    await auth().signOut();
+    AsyncStorage.removeItem('userData');
+    dispatch({type: LOG_OUT});
   };
 };
 

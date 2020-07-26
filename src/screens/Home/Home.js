@@ -10,19 +10,23 @@ import * as postActions from '../../store/actions/post';
 
 const Home = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
   const [search, setSearch] = useState('');
 
   const dispatch = useDispatch();
 
   const loadPost = useCallback(async () => {
+    setError(null);
+    setIsRefreshing(true);
     try {
       await dispatch(postActions.fetchPosts());
       await dispatch(postActions.fetchFavourites());
     } catch (e) {
       setError(e.message);
     }
-  }, [dispatch]);
+    setIsRefreshing(false);
+  }, [dispatch, setIsLoading, setError]);
 
   useEffect(() => {
     if (error) {
@@ -31,12 +35,20 @@ const Home = ({navigation}) => {
   }, [error]);
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', loadPost);
+
+    return () => {
+      unsubscribe();
+    };
+  }, [loadPost]);
+
+  useEffect(() => {
     setIsLoading(true);
     loadPost().then(() => {
       setError(null);
       setIsLoading(false);
     });
-  }, [loadPost]);
+  }, [loadPost, dispatch]);
 
   const POSTS = useSelector(state => {
     const allPosts = state.posts.allPosts;
@@ -95,6 +107,8 @@ const Home = ({navigation}) => {
         </View>
       ) : (
         <FlatList
+          onRefresh={loadPost}
+          refreshing={isRefreshing}
           data={POSTS}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}

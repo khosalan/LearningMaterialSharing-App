@@ -4,11 +4,11 @@ import {
   View,
   Text,
   KeyboardAvoidingView,
-  Button,
   Alert,
   ActivityIndicator,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import {Button} from 'react-native-paper';
 
 import styles from './styles';
 import {Input} from '../../components';
@@ -211,14 +211,17 @@ const SignUp = ({navigation}) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button title="SIGN UP" color={Colors.blue} onPress={handleSinUp} />
+          <Button mode="contained" color={Colors.blue} onPress={handleSinUp}>
+            SIGN UP
+          </Button>
 
           <View style={styles.alreadyButton}>
             <Button
-              title="ALREADY HAVE AN ACCOUNT"
+              mode="contained"
               color={Colors.lightRed}
-              onPress={() => navigation.navigate('SignIn')}
-            />
+              onPress={() => navigation.navigate('SignIn')}>
+              ALREADY HAVE AN ACCOUNT
+            </Button>
           </View>
         </View>
       </ScrollView>

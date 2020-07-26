@@ -4,11 +4,11 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Button,
   Alert,
   ActivityIndicator,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
+import {Button} from 'react-native-paper';
 
 import styles from './styles';
 import {Colors} from '../../utils/constant';
@@ -161,14 +161,17 @@ const SignIn = ({navigation}) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button title="SIGN IN" color={Colors.blue} onPress={handleSinIn} />
+        <Button mode="contained" color={Colors.blue} onPress={handleSinIn}>
+          SIGN IN
+        </Button>
 
         <View style={styles.createButton}>
           <Button
-            title="CREATE AN ACCOUNT"
+            mode="contained"
             color={Colors.lightRed}
-            onPress={() => navigation.navigate('SignUp')}
-          />
+            onPress={() => navigation.navigate('SignUp')}>
+            CREATE AN ACCOUNT
+          </Button>
         </View>
       </View>
     </ScrollView>
