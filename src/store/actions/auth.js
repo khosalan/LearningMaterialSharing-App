@@ -1,24 +1,40 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const TRY_AUTO_LOGIN = 'TRY_AUTO_LOGIN';
 export const LOG_OUT = 'LOG_OUT';
+export const UPLOAD_PROFILE_PIC = 'UPLOAD_PROFILE_PIC';
 
 export const tryAutoLogin = () => {
   return {type: TRY_AUTO_LOGIN};
 };
 
-export const authenticate = (
-  userID,
-  token,
-  firstName,
-  lastName,
-  regNo,
-  email,
-) => {
-  return {type: AUTHENTICATE, userID, token, firstName, lastName, regNo, email};
+export const authenticate = (userID, token, firstName, lastName, regNo) => {
+  return async dispatch => {
+    const email = auth().currentUser.email;
+    let url;
+    try {
+      url = await storage()
+        .ref(`profile_pictures/${auth().currentUser.uid}`)
+        .getDownloadURL();
+    } catch (e) {
+      url =
+        'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png';
+    }
+    dispatch({
+      type: AUTHENTICATE,
+      userID,
+      token,
+      firstName,
+      lastName,
+      regNo,
+      email,
+      profilePic: url,
+    });
+  };
 };
 
 export const signUp = (firstName, lastName, regNo, email, password) => {
@@ -39,8 +55,8 @@ export const signUp = (firstName, lastName, regNo, email, password) => {
           email,
         });
 
-      dispatch(authenticate(userID, token, firstName, lastName, regNo, email));
-      saveDataToStorage(token, userID, firstName, lastName, regNo, email);
+      dispatch(authenticate(userID, token, firstName, lastName, regNo));
+      saveDataToStorage(token, userID, firstName, lastName, regNo);
     } catch (e) {
       if (e.code === 'auth/email-already-in-use') {
         throw new Error(
@@ -76,7 +92,6 @@ export const signIn = (email, password) => {
           user.data().firstName,
           user.data().lastName,
           user.data().regNo,
-          email,
         ),
       );
       saveDataToStorage(
@@ -85,7 +100,6 @@ export const signIn = (email, password) => {
         user.data().firstName,
         user.data().lastName,
         user.data().regNo,
-        email,
       );
     } catch (e) {
       if (
@@ -111,16 +125,24 @@ export const logout = () => {
   };
 };
 
-const saveDataToStorage = (
-  token,
-  userID,
-  firstName,
-  lastName,
-  regNo,
-  email,
-) => {
+export const uploadProfilePicture = filepath => {
+  return async dispatch => {
+    const reference = storage().ref(
+      `profile_pictures/${auth().currentUser.uid}`,
+    );
+    const response = await reference.putFile(filepath);
+
+    const url = await storage()
+      .ref(`profile_pictures/${auth().currentUser.uid}`)
+      .getDownloadURL();
+
+    dispatch({type: UPLOAD_PROFILE_PIC, profilePic: url});
+  };
+};
+
+const saveDataToStorage = (token, userID, firstName, lastName, regNo) => {
   AsyncStorage.setItem(
     'userData',
-    JSON.stringify({token, userID, firstName, lastName, regNo, email}),
+    JSON.stringify({token, userID, firstName, lastName, regNo}),
   );
 };

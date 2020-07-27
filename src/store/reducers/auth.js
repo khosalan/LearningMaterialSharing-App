@@ -1,4 +1,9 @@
-import {AUTHENTICATE, TRY_AUTO_LOGIN, LOG_OUT} from '../actions/auth';
+import {
+  AUTHENTICATE,
+  TRY_AUTO_LOGIN,
+  LOG_OUT,
+  UPLOAD_PROFILE_PIC,
+} from '../actions/auth';
 
 const initialState = {
   userID: null,
@@ -6,7 +11,9 @@ const initialState = {
   tryAutoLogin: false,
   firstName: '',
   lastName: '',
+  email: '',
   regNo: '',
+  profilePic: '',
 };
 
 export default (state = initialState, action) => {
@@ -20,6 +27,7 @@ export default (state = initialState, action) => {
         regNo: action.regNo,
         email: action.email,
         tryAutoLogin: true,
+        profilePic: action.profilePic,
       };
 
     case TRY_AUTO_LOGIN:
@@ -32,6 +40,12 @@ export default (state = initialState, action) => {
       return {
         ...initialState,
         tryAutoLogin: true,
+      };
+
+    case UPLOAD_PROFILE_PIC:
+      return {
+        ...state,
+        profilePic: action.profilePic,
       };
 
     default:

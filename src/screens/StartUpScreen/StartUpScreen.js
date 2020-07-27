@@ -16,21 +16,14 @@ const StartUpScreen = () => {
         return;
       }
       const transformedData = JSON.parse(userData);
-      const {
-        token,
-        userID,
-        firstName,
-        lastName,
-        regNo,
-        email,
-      } = transformedData;
+      const {token, userID, firstName, lastName, regNo} = transformedData;
 
-      if (!token || !userID || !firstName || !lastName || !regNo || !email) {
+      if (!token || !userID || !firstName || !lastName || !regNo) {
         dispatch(tryAutoLogin());
         return;
       }
 
-      dispatch(authenticate(userID, token, firstName, lastName, regNo, email));
+      dispatch(authenticate(userID, token, firstName, lastName, regNo));
     };
 
     tryLogin();
