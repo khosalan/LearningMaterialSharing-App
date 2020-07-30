@@ -1,5 +1,11 @@
 import React, {createRef, useState} from 'react';
-import {View, ScrollView, TouchableOpacity, Alert} from 'react-native';
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -10,7 +16,11 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import {HeaderButton} from '../../components';
 import styles from './styles';
-import {uploadProfilePicture} from '../../store/actions/auth';
+import {
+  uploadProfilePicture,
+  deleteProfilePicture,
+} from '../../store/actions/auth';
+import {Colors} from '../../utils/constant';
 
 const Profile = () => {
   const firstName = useSelector(state => state.auth.firstName);
@@ -22,6 +32,7 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const [image, setImage] = useState(profilePic);
+  const [isLoading, setIsLoading] = useState(false);
 
   const bs = createRef();
   const fall = new Animated.Value(1);
@@ -36,6 +47,7 @@ const Profile = () => {
         setImage(image.path);
         dispatch(uploadProfilePicture(image.path));
       })
+      .then(() => setIsLoading(false))
       .catch(e => {
         console.log(e);
       });
@@ -49,13 +61,29 @@ const Profile = () => {
       cropping: true,
     })
       .then(image => {
-        setImage(image.path);
+        setIsLoading(true);
         dispatch(uploadProfilePicture(image.path));
+        setImage(image.path);
+        setIsLoading(false);
       })
       .catch(e => {
         console.log(e);
       });
+
     bs.current.snapTo(1);
+  };
+
+  const removePicture = () => {
+    setIsLoading(true);
+    dispatch(deleteProfilePicture())
+      .then(() => {
+        setImage(null);
+        setIsLoading(false);
+      })
+      .catch(e => {
+        setIsLoading(false);
+        alert(e.message);
+      });
   };
 
   const renderContent = () => (
@@ -77,9 +105,16 @@ const Profile = () => {
 
       <TouchableOpacity
         style={styles.panelButton}
+        onPress={removePicture}
+        disabled={image ? false : true}>
+        <Text style={styles.panelButtonTitle}>Remove Profile Picture</Text>
+      </TouchableOpacity>
+
+      {/* <TouchableOpacity
+        style={styles.panelButton}
         onPress={() => bs.current.snapTo(1)}>
         <Text style={styles.panelButtonTitle}>Cancel</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 
@@ -98,6 +133,15 @@ const Profile = () => {
     ]);
   };
 
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <Text>Please Wait</Text>
+        <ActivityIndicator size="large" color={Colors.blue} />
+      </View>
+    );
+  }
+
   return (
     <ScrollView style={{flex: 1}} contentContainerStyle={{flexGrow: 1}}>
       <BottomSheet
@@ -114,7 +158,12 @@ const Profile = () => {
         <TouchableOpacity
           style={styles.image}
           onPress={() => bs.current.snapTo(0)}>
-          <Avatar.Image source={{uri: image}} size={120} />
+          <Avatar.Image
+            source={
+              image ? {uri: image} : require('../../../assets/profile.png')
+            }
+            size={120}
+          />
         </TouchableOpacity>
         <Divider />
         <View style={styles.container}>

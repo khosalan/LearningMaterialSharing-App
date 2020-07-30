@@ -7,6 +7,7 @@ export const AUTHENTICATE = 'AUTHENTICATE';
 export const TRY_AUTO_LOGIN = 'TRY_AUTO_LOGIN';
 export const LOG_OUT = 'LOG_OUT';
 export const UPLOAD_PROFILE_PIC = 'UPLOAD_PROFILE_PIC';
+export const DELETE_PROFILE_PIC = 'DELETE_PROFILE_PIC';
 
 export const tryAutoLogin = () => {
   return {type: TRY_AUTO_LOGIN};
@@ -21,8 +22,7 @@ export const authenticate = (userID, token, firstName, lastName, regNo) => {
         .ref(`profile_pictures/${auth().currentUser.uid}`)
         .getDownloadURL();
     } catch (e) {
-      url =
-        'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png';
+      url = null;
     }
     dispatch({
       type: AUTHENTICATE,
@@ -130,13 +130,30 @@ export const uploadProfilePicture = filepath => {
     const reference = storage().ref(
       `profile_pictures/${auth().currentUser.uid}`,
     );
-    const response = await reference.putFile(filepath);
+    await reference.putFile(filepath);
 
     const url = await storage()
       .ref(`profile_pictures/${auth().currentUser.uid}`)
       .getDownloadURL();
 
     dispatch({type: UPLOAD_PROFILE_PIC, profilePic: url});
+  };
+};
+
+export const deleteProfilePicture = () => {
+  return async dispatch => {
+    try {
+      const reference = storage().ref(
+        `profile_pictures/${auth().currentUser.uid}`,
+      );
+
+      await reference.delete();
+      dispatch({type: DELETE_PROFILE_PIC});
+    } catch (e) {
+      if (e.code === 'storage/object-not-found')
+        throw new Error('Invalid operation');
+      throw new Error('Something went wrong');
+    }
   };
 };
 

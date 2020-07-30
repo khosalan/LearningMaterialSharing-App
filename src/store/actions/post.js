@@ -14,6 +14,7 @@ export const fetchPosts = () => {
     try {
       const response = await firestore()
         .collection('Posts')
+        .orderBy('createdAt', 'desc')
         .get();
 
       const loadedPosts = [];

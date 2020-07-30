@@ -34,13 +34,13 @@ const Home = ({navigation}) => {
     }
   }, [error]);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', loadPost);
+  // useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', loadPost);
 
-    return () => {
-      unsubscribe();
-    };
-  }, [loadPost]);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [loadPost]);
 
   useEffect(() => {
     setIsLoading(true);

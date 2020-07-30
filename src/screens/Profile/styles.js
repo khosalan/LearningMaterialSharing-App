@@ -81,9 +81,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
+
   panelHeader: {
     alignItems: 'center',
   },
+
   panelHandle: {
     width: 40,
     height: 8,
@@ -102,12 +104,14 @@ const styles = StyleSheet.create({
     fontSize: 27,
     height: 35,
   },
+
   panelSubtitle: {
     fontSize: 14,
     color: 'gray',
     height: 30,
     marginBottom: 10,
   },
+
   panelButton: {
     padding: 13,
     borderRadius: 10,
@@ -115,10 +119,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 7,
   },
+
   panelButtonTitle: {
     fontSize: 17,
     fontWeight: 'bold',
     color: 'white',
+  },
+
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
