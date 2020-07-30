@@ -8,7 +8,7 @@ const Colors = {
   red: '#e80e0e',
   lightRed: '#db324f',
   orange: '#d6661c',
-  commentGray: '#f3f6f8',
+  commentGray: '#e8ebed',
 };
 
 export {Colors};

@@ -36,9 +36,7 @@ const CardBottom = props => {
         ) : null}
 
         {!props.isFav ? (
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={() => props.navigation.navigate('Comments')}>
+          <TouchableOpacity style={styles.iconButton} onPress={props.onClick}>
             <MaterialCommunityIcons name="comment-text-outline" size={20} />
             <View style={styles.comment}>
               <Text>Comment</Text>

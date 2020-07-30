@@ -1,4 +1,4 @@
-import firestore, {firebase} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 import Post from '../../models/post';
 
 export const CREATE_POST = 'CREATE_POST';

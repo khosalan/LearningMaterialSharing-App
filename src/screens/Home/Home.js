@@ -69,6 +69,10 @@ const Home = ({navigation}) => {
     setSearch(text);
   };
 
+  const commentsHandler = postID => {
+    navigation.navigate('Comments', {postID});
+  };
+
   const renderItem = ({item}) => {
     return (
       <Card
@@ -82,7 +86,7 @@ const Home = ({navigation}) => {
           id={item.id}
           like={item.like}
           dislike={item.dislike}
-          navigation={navigation}
+          onClick={() => commentsHandler(item.id)}
         />
       </Card>
     );

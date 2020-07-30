@@ -4,7 +4,7 @@ import {Avatar} from 'react-native-paper';
 
 import styles from './styles';
 
-const CommentCard = () => {
+const CommentCard = props => {
   return (
     <View style={styles.container}>
       <Avatar.Image
@@ -15,8 +15,8 @@ const CommentCard = () => {
         size={50}
       />
       <View style={styles.textContainer}>
-        <Text style={styles.name}>Khosalan</Text>
-        <Text>Hi there </Text>
+        <Text style={styles.name}>{props.ownerName}</Text>
+        <Text>{props.comment}</Text>
       </View>
     </View>
   );
