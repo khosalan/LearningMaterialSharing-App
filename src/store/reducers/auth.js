@@ -4,6 +4,7 @@ import {
   LOG_OUT,
   UPLOAD_PROFILE_PIC,
   DELETE_PROFILE_PIC,
+  DELETE_ACCOUNT,
 } from '../actions/auth';
 
 const initialState = {
@@ -38,6 +39,7 @@ export default (state = initialState, action) => {
       };
 
     case LOG_OUT:
+    case DELETE_ACCOUNT:
       return {
         ...initialState,
         tryAutoLogin: true,

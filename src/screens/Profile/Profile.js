@@ -19,10 +19,11 @@ import styles from './styles';
 import {
   uploadProfilePicture,
   deleteProfilePicture,
+  deleteAccount,
 } from '../../store/actions/auth';
 import {Colors} from '../../utils/constant';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   const firstName = useSelector(state => state.auth.firstName);
   const lastName = useSelector(state => state.auth.lastName);
   const regNo = useSelector(state => state.auth.regNo);
@@ -47,7 +48,6 @@ const Profile = () => {
         setImage(image.path);
         dispatch(uploadProfilePicture(image.path));
       })
-      .then(() => setIsLoading(false))
       .catch(e => {
         console.log(e);
       });
@@ -61,13 +61,12 @@ const Profile = () => {
       cropping: true,
     })
       .then(image => {
-        setIsLoading(true);
-        dispatch(uploadProfilePicture(image.path));
         setImage(image.path);
-        setIsLoading(false);
+        dispatch(uploadProfilePicture(image.path));
       })
       .catch(e => {
         console.log(e);
+        setIsLoading(false);
       });
 
     bs.current.snapTo(1);
@@ -104,17 +103,14 @@ const Profile = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.panelButton}
+        style={{
+          ...styles.panelButton,
+          backgroundColor: image ? Colors.lightRed : Colors.darkGray,
+        }}
         onPress={removePicture}
         disabled={image ? false : true}>
         <Text style={styles.panelButtonTitle}>Remove Profile Picture</Text>
       </TouchableOpacity>
-
-      {/* <TouchableOpacity
-        style={styles.panelButton}
-        onPress={() => bs.current.snapTo(1)}>
-        <Text style={styles.panelButtonTitle}>Cancel</Text>
-      </TouchableOpacity> */}
     </View>
   );
 
@@ -125,13 +121,6 @@ const Profile = () => {
       </View>
     </View>
   );
-
-  const deleteHandler = () => {
-    Alert.alert('Are your sure', 'Do you really want to delte your account?', [
-      {text: 'Yes'},
-      {text: 'No', style: 'cancel'},
-    ]);
-  };
 
   if (isLoading) {
     return (
@@ -160,7 +149,7 @@ const Profile = () => {
           onPress={() => bs.current.snapTo(0)}>
           <Avatar.Image
             source={
-              image ? {uri: image} : require('../../../assets/profile.png')
+              image ? {uri: image} : require('../../../assets/profile2.png')
             }
             size={120}
           />
@@ -206,7 +195,9 @@ const Profile = () => {
 
           <View style={styles.deleteContainer}>
             <Text style={styles.editableLabel}>Advanced</Text>
-            <Text style={styles.deleteText} onPress={deleteHandler}>
+            <Text
+              style={styles.deleteText}
+              onPress={() => navigation.navigate('Password')}>
               Delete account
             </Text>
           </View>

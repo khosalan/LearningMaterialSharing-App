@@ -8,6 +8,7 @@ export const TRY_AUTO_LOGIN = 'TRY_AUTO_LOGIN';
 export const LOG_OUT = 'LOG_OUT';
 export const UPLOAD_PROFILE_PIC = 'UPLOAD_PROFILE_PIC';
 export const DELETE_PROFILE_PIC = 'DELETE_PROFILE_PIC';
+export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
 
 export const tryAutoLogin = () => {
   return {type: TRY_AUTO_LOGIN};
@@ -122,6 +123,38 @@ export const logout = () => {
     await auth().signOut();
     AsyncStorage.removeItem('userData');
     dispatch({type: LOG_OUT});
+  };
+};
+
+export const deleteAccount = password => {
+  return async dispatch => {
+    try {
+      const user = auth().currentUser;
+
+      await auth().signInWithEmailAndPassword(user.email, password);
+
+      await user.delete();
+      await firestore()
+        .collection('Users')
+        .doc(user.uid)
+        .delete();
+
+      const posts = await firestore()
+        .collection('Posts')
+        .where('owner', '==', user.uid)
+        .get();
+      const batch = firestore().batch();
+      posts.forEach(documentSnapShot => {
+        batch.delete(documentSnapShot.ref);
+      });
+      batch.commit();
+      AsyncStorage.removeItem('userData');
+      dispatch({type: DELETE_ACCOUNT});
+    } catch (e) {
+      if (e.code === 'auth/wrong-password') {
+        throw new Error('Incorrect password');
+      }
+    }
   };
 };
 

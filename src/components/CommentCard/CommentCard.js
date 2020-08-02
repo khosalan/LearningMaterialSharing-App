@@ -1,23 +1,29 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {Avatar} from 'react-native-paper';
+import moment from 'moment';
 
 import styles from './styles';
 
 const CommentCard = props => {
   return (
     <View style={styles.container}>
-      <Avatar.Image
-        source={{
-          uri:
-            'https://images.theconversation.com/files/304864/original/file-20191203-67028-qfiw3k.jpeg?ixlib=rb-1.1.0&rect=638%2C2%2C795%2C745&q=45&auto=format&w=496&fit=clip',
-        }}
-        size={50}
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.name}>{props.ownerName}</Text>
-        <Text>{props.comment}</Text>
+      <View style={styles.commentContainer}>
+        <Avatar.Image
+          source={require('../../../assets/profile2.png')}
+          size={50}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.name}>{props.ownerName}</Text>
+          <Text>{props.comment}</Text>
+        </View>
       </View>
+      <Text style={styles.time}>
+        {moment(
+          moment(props.time * 1000).format('YYYYMMDDkkmmss'),
+          'YYYYMMDDkkmmss',
+        ).fromNow()}
+      </Text>
     </View>
   );
 };

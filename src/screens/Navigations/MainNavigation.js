@@ -12,10 +12,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useDispatch} from 'react-redux';
 
 import {Colors} from '../../utils/constant';
-import HomeNavigation from '../Navigations/HomeNavigation';
-import FavouritesNavigation from '../Navigations/FavouritesNavigation';
-import MyPostsNavigation from '../Navigations/MyPostsNavigation';
+import HomeNavigation from './HomeNavigation';
+import FavouritesNavigation from './FavouritesNavigation';
+import MyPostsNavigation from './MyPostsNavigation';
 import {Profile, screenOptions as profileScreenOptions} from '../Profile';
+import {PasswordConfirm} from '../PasswordConfirm';
 import {logout} from '../../store/actions/auth';
 
 const HomeNavigator = () => {
@@ -66,6 +67,8 @@ const ProfileNavigator = () => {
         component={Profile}
         options={profileScreenOptions}
       />
+
+      <Stack.Screen name="Password" component={PasswordConfirm} />
     </Stack.Navigator>
   );
 };

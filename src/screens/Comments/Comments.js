@@ -17,7 +17,9 @@ import {addComments, fetchComments} from '../../store/actions/comment';
 
 const Comments = ({route}) => {
   const [isLoading, setIsLoading] = useState(false);
+
   const [error, setError] = useState();
+  const [comment, setComment] = useState('');
 
   const postID = route.params.postID;
 
@@ -44,10 +46,12 @@ const Comments = ({route}) => {
     loadComment();
   }, [loadComment, dispatch]);
 
-  const postHandler = () => {
+  const commentHandler = async () => {
     try {
-      dispatch(addComments(postID, 'Some comments'));
+      setIsLoading(true);
+      await dispatch(addComments(postID, comment));
     } catch (e) {}
+    setIsLoading(false);
   };
 
   const comments = useSelector(state => state.comment.comments);
@@ -61,7 +65,7 @@ const Comments = ({route}) => {
     );
   }
 
-  const rednerItem = ({item}) => {
+  const renderItem = ({item}) => {
     return (
       <CommentCard
         owner={item.owner}
@@ -80,7 +84,7 @@ const Comments = ({route}) => {
             <Text>No Comments Yet</Text>
           </View>
         ) : (
-          <FlatList data={comments} renderItem={rednerItem} />
+          <FlatList data={comments} renderItem={renderItem} />
         )}
       </View>
 
@@ -90,9 +94,10 @@ const Comments = ({route}) => {
           multiline
           autoCorrect={false}
           style={styles.input}
+          onChangeText={setComment}
         />
 
-        <TouchableOpacity onPress={postHandler}>
+        <TouchableOpacity onPress={commentHandler}>
           <Text style={styles.post}>POST</Text>
         </TouchableOpacity>
       </View>

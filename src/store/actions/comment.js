@@ -24,16 +24,16 @@ export const addComments = (postID, comment) => {
         });
       const resData = await response.get();
 
-      // dispatch({
-      //   type: CREATE_COMMENT,
-      //   commentData: {
-      //     id: resData.id,
-      //     comment,
-      //     createdAt: resData.data().createdAt._seconds,
-      //     owner,
-      //     ownerName,
-      //   },
-      // });
+      dispatch({
+        type: CREATE_COMMENT,
+        commentData: {
+          id: resData.id,
+          comment,
+          createdAt: resData.data().createdAt._seconds,
+          owner,
+          ownerName,
+        },
+      });
     } catch (e) {
       console.log(e);
       throw new Error(e);
@@ -48,7 +48,6 @@ export const fetchComments = postID => {
         .collection('Posts')
         .doc(postID)
         .collection('Comments')
-        .orderBy('createdAt', 'desc')
         .get();
 
       const loadedComments = [];

@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 import StartUpScreen from '../../screens/StartUpScreen';
 import AuthNavigation from '../Navigations/AuthNavigation';
-import MainNavigation from '../Navigations/ManiNavigation';
+import MainNavigation from '../Navigations/MainNavigation';
 
 const Root = () => {
   const isAuth = useSelector(state => !!state.auth.token);
