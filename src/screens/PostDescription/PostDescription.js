@@ -50,6 +50,10 @@ const PostDescription = ({navigation, route}) => {
     ]);
   };
 
+  const commentsHandler = postID => {
+    navigation.navigate('Comments', {postID});
+  };
+
   if (isDeleting) {
     return (
       <View style={styles.centered}>
@@ -68,12 +72,13 @@ const PostDescription = ({navigation, route}) => {
           title={post.title}
           description={post.description}
           imageUrl={post.imageUrl}
-          links={post.links}>
+          links={post.links}
+          avatar={post.avatar}>
           <CardBottom
             id={post.id}
             like={post.like}
             dislike={post.dislike}
-            navigation={navigation}
+            onClick={() => commentsHandler(post.id)}
           />
         </CardFullView>
       )}

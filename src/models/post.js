@@ -9,8 +9,7 @@ class Post {
     description,
     links,
     like,
-    dislike,
-    comment,
+    avatar,
   ) {
     this.id = id;
     this.owner = owner;
@@ -20,9 +19,8 @@ class Post {
     this.imageUrl = imageUrl;
     this.description = description;
     this.like = like;
-    this.dislike = dislike;
-    this.comment = comment;
     this.links = links;
+    this.avatar = avatar;
   }
 }
 

@@ -9,15 +9,17 @@ import {
 } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {Colors} from '../../utils/constant';
 import HomeNavigation from './HomeNavigation';
 import FavouritesNavigation from './FavouritesNavigation';
 import MyPostsNavigation from './MyPostsNavigation';
 import {Profile, screenOptions as profileScreenOptions} from '../Profile';
-import {PasswordConfirm} from '../PasswordConfirm';
+import PasswordConfirm from '../PasswordConfirm';
 import {logout} from '../../store/actions/auth';
+import {View} from 'react-native';
+import {Divider, Avatar, Text} from 'react-native-paper';
 
 const HomeNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -68,12 +70,22 @@ const ProfileNavigator = () => {
         options={profileScreenOptions}
       />
 
-      <Stack.Screen name="Password" component={PasswordConfirm} />
+      <Stack.Screen
+        name="Password"
+        component={PasswordConfirm}
+        options={{headerTitle: 'Delete Account'}}
+      />
     </Stack.Navigator>
   );
 };
 
 const MainNavigation = () => {
+  const avatar = useSelector(state => state.auth.profilePic);
+  const userName =
+    useSelector(state => state.auth.firstName) +
+    ' ' +
+    useSelector(state => state.auth.lastName);
+
   const dispatch = useDispatch();
   const Drawer = createDrawerNavigator();
   return (
@@ -81,20 +93,39 @@ const MainNavigation = () => {
       drawerContentOptions={{activeTintColor: Colors.red}}
       initialRouteName="Home"
       drawerContent={props => (
-        <DrawerContentScrollView>
-          <DrawerItemList {...props} />
-
-          <DrawerItem
-            label="Log Out"
-            onPress={() => dispatch(logout())}
-            icon={props => (
-              <MaterialCommunityIcons
-                name="logout"
-                size={24}
-                color={props.color}
+        <DrawerContentScrollView contentContainerStyle={{flex: 1}}>
+          <View style={{flex: 1}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Avatar.Image
+                source={
+                  avatar
+                    ? {uri: avatar}
+                    : require('../../../assets/profile.png')
+                }
+                size={70}
+                style={{margin: 15}}
               />
-            )}
-          />
+              <Text style={{fontSize: 15, fontWeight: 'bold'}}>{userName}</Text>
+            </View>
+            <View style={{flex: 1, marginTop: 10}}>
+              <DrawerItemList {...props} />
+            </View>
+            <View style={{marginVertical: 20, justifyContent: 'center'}}>
+              <Divider />
+              <DrawerItem
+                label="Log Out"
+                onPress={() => dispatch(logout())}
+                icon={props => (
+                  <MaterialCommunityIcons
+                    name="logout"
+                    size={24}
+                    color={props.color}
+                  />
+                )}
+              />
+              <Divider />
+            </View>
+          </View>
         </DrawerContentScrollView>
       )}>
       <Drawer.Screen

@@ -25,6 +25,7 @@ const Favourites = ({navigation}) => {
         title={item.title}
         description={item.description}
         imageUrl={item.imageUrl}
+        avatar={item.avatar}
         onSelect={() => onSelectPostHandler(item.id, item.title)}>
         <CardBottom
           id={item.id}

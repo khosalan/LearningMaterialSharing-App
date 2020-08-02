@@ -1,3 +1,3 @@
 import PasswordConfirm from './PasswordConfirm';
 
-export {PasswordConfirm};
+export default PasswordConfirm;

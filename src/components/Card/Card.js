@@ -23,7 +23,11 @@ const Card = props => {
       <View style={styles.authorContainer}>
         <Avatar.Image
           size={50}
-          source={require('../../../assets/avatar.jpeg')}
+          source={
+            props.avatar
+              ? {uri: props.avatar}
+              : require('../../../assets/profile2.png')
+          }
           style={styles.icon}
         />
         <View style={styles.nameContainer}>

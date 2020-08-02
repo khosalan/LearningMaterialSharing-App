@@ -10,7 +10,11 @@ const CommentCard = props => {
     <View style={styles.container}>
       <View style={styles.commentContainer}>
         <Avatar.Image
-          source={require('../../../assets/profile2.png')}
+          source={
+            props.avatar
+              ? {uri: props.avatar}
+              : require('../../../assets/profile2.png')
+          }
           size={50}
         />
         <View style={styles.textContainer}>

@@ -30,6 +30,8 @@ export const fetchPosts = () => {
             documentSnapshot.data().imageUrl,
             documentSnapshot.data().description,
             documentSnapshot.data().links,
+            '',
+            documentSnapshot.data().avatar,
           ),
         );
       });
@@ -67,6 +69,8 @@ export const fetchMyPosts = () => {
             documentSnapshot.data().imageUrl,
             documentSnapshot.data().description,
             documentSnapshot.data().links,
+            '',
+            documentSnapshot.data().avatar,
           ),
         ),
       );
@@ -87,6 +91,7 @@ export const createPost = (title, description, imageUrl, links) => {
     const owner = getState().auth.userID;
     const ownerName =
       getState().auth.firstName + ' ' + getState().auth.lastName;
+    const avatar = getState().auth.profilePic;
 
     try {
       const response = await firestore()
@@ -99,6 +104,7 @@ export const createPost = (title, description, imageUrl, links) => {
           createdAt: firestore.FieldValue.serverTimestamp(),
           owner,
           ownerName,
+          avatar: avatar ? avatar : null,
         });
       const resData = await response.get();
 
@@ -113,6 +119,7 @@ export const createPost = (title, description, imageUrl, links) => {
           createdAt: resData.data().createdAt._seconds,
           owner,
           ownerName,
+          avatar: avatar ? avatar : null,
         },
       });
     } catch (e) {
@@ -193,6 +200,7 @@ export const toggleFavourite = postID => {
         owner: post.owner,
         ownerName: post.ownerName,
         time: post.time,
+        avatar: post.avatar,
       });
     } else {
       await query.delete();

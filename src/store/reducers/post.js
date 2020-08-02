@@ -47,6 +47,8 @@ export default (state = initialState, action) => {
         action.postData.imageUrl,
         action.postData.description,
         action.postData.links,
+        '',
+        action.postData.avatar,
       );
 
       return {
@@ -69,6 +71,7 @@ export default (state = initialState, action) => {
         action.postData.imageUrl,
         action.postData.description,
         action.postData.links,
+        state.myPosts[postID].avatar,
       );
 
       const updateMyPosts = [...state.myPosts];

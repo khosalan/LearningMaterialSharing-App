@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import auth, {firebase} from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
@@ -189,6 +189,19 @@ export const uploadProfilePicture = filepath => {
       .ref(`profile_pictures/${auth().currentUser.uid}`)
       .getDownloadURL();
 
+    const posts = await firestore()
+      .collection('Posts')
+      .where('owner', '==', auth().currentUser.uid)
+      .get();
+
+    const batch = firestore().batch();
+
+    posts.forEach(documentSnapShot => {
+      batch.update(documentSnapShot.ref, {avatar: url});
+    });
+
+    batch.commit();
+
     dispatch({type: UPLOAD_PROFILE_PIC, profilePic: url});
   };
 };
@@ -201,6 +214,20 @@ export const deleteProfilePicture = () => {
       );
 
       await reference.delete();
+
+      const posts = await firestore()
+        .collection('Posts')
+        .where('owner', '==', auth().currentUser.uid)
+        .get();
+
+      const batch = firestore().batch();
+
+      posts.forEach(documentSnapShot => {
+        batch.update(documentSnapShot.ref, {avatar: null});
+      });
+
+      batch.commit();
+
       dispatch({type: DELETE_PROFILE_PIC});
     } catch (e) {
       if (e.code === 'storage/object-not-found')

@@ -3,7 +3,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -19,7 +18,6 @@ import styles from './styles';
 import {
   uploadProfilePicture,
   deleteProfilePicture,
-  deleteAccount,
 } from '../../store/actions/auth';
 import {Colors} from '../../utils/constant';
 
@@ -197,7 +195,9 @@ const Profile = ({navigation}) => {
             <Text style={styles.editableLabel}>Advanced</Text>
             <Text
               style={styles.deleteText}
-              onPress={() => navigation.navigate('Password')}>
+              onPress={() =>
+                navigation.navigate('Password', {title: 'Delete Account'})
+              }>
               Delete account
             </Text>
           </View>
