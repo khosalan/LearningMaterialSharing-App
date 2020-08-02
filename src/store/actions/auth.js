@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import auth from '@react-native-firebase/auth';
+import auth, {firebase} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
@@ -16,25 +16,31 @@ export const tryAutoLogin = () => {
 
 export const authenticate = (userID, token, firstName, lastName, regNo) => {
   return async dispatch => {
-    const email = auth().currentUser.email;
-    let url;
     try {
-      url = await storage()
-        .ref(`profile_pictures/${auth().currentUser.uid}`)
-        .getDownloadURL();
+      const email = auth().currentUser.email;
+      let url;
+      try {
+        url = await storage()
+          .ref(`profile_pictures/${auth().currentUser.uid}`)
+          .getDownloadURL();
+      } catch (e) {
+        url = null;
+      }
+      dispatch({
+        type: AUTHENTICATE,
+        userID,
+        token,
+        firstName,
+        lastName,
+        regNo,
+        email,
+        profilePic: url,
+      });
     } catch (e) {
-      url = null;
+      console.log(e);
+      AsyncStorage.removeItem('userData');
+      dispatch({type: TRY_AUTO_LOGIN});
     }
-    dispatch({
-      type: AUTHENTICATE,
-      userID,
-      token,
-      firstName,
-      lastName,
-      regNo,
-      email,
-      profilePic: url,
-    });
   };
 };
 
@@ -143,17 +149,31 @@ export const deleteAccount = password => {
         .collection('Posts')
         .where('owner', '==', user.uid)
         .get();
+
       const batch = firestore().batch();
+
       posts.forEach(documentSnapShot => {
         batch.delete(documentSnapShot.ref);
       });
+
       batch.commit();
       AsyncStorage.removeItem('userData');
+
       dispatch({type: DELETE_ACCOUNT});
     } catch (e) {
+      console.log(e);
       if (e.code === 'auth/wrong-password') {
-        throw new Error('Incorrect password');
+        throw new Error(
+          'Incorrect password. Please enter your password correctly',
+        );
       }
+
+      if (e.code === 'auth/too-many-requests') {
+        throw new Error(
+          'Too many attempts. Your account has been blocked temporerly. Please try again later',
+        );
+      }
+      throw e;
     }
   };
 };

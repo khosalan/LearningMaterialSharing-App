@@ -31,7 +31,7 @@ const PasswordConfirm = () => {
       'Important !!!',
       'By clicking yes all your user data and the posts posted by you will be completelly removed. Are you sure about your decision',
       [
-        {text: 'Yes', style: 'destructive', onPress: {deleteAccountHandler}},
+        {text: 'Yes', style: 'destructive', onPress: deleteAccountHandler},
         {text: 'No', style: 'cancel'},
       ],
     );
