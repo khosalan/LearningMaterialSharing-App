@@ -72,7 +72,6 @@ const Comments = ({route}) => {
         ownerName={item.ownerName}
         comment={item.comment}
         time={item.time}
-        avatar={item.avatar}
       />
     );
   };

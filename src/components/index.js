@@ -5,6 +5,7 @@ import HeaderButton from './HeaderButton';
 import Input from './Input';
 import SearchBar from './SearchBar';
 import CommentCard from './CommentCard';
+import PasswordInput from './PasswordInput';
 
 export {
   Card,
@@ -14,4 +15,5 @@ export {
   Input,
   SearchBar,
   CommentCard,
+  PasswordInput,
 };

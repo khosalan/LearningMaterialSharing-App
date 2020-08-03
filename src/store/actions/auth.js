@@ -124,6 +124,23 @@ export const signIn = (email, password) => {
   };
 };
 
+export const changePassword = (oldPassword, newPassword) => {
+  return async dispatch => {
+    try {
+      const user = auth().currentUser;
+      await auth().signInWithEmailAndPassword(
+        auth().currentUser.email,
+        oldPassword,
+      );
+      await user.updatePassword(newPassword);
+      AsyncStorage.removeItem('userData');
+      dispatch({type: LOG_OUT});
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
 export const logout = () => {
   return async dispatch => {
     await auth().signOut();

@@ -14,12 +14,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  inputContainer: {
-    borderWidth: 1,
-    marginTop: 5,
-    paddingHorizontal: 10,
-  },
-
   button: {
     marginTop: 20,
   },

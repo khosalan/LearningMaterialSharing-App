@@ -1,5 +1,6 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {View} from 'react-native';
+import {Divider, Avatar, Text} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   createDrawerNavigator,
@@ -15,11 +16,9 @@ import {Colors} from '../../utils/constant';
 import HomeNavigation from './HomeNavigation';
 import FavouritesNavigation from './FavouritesNavigation';
 import MyPostsNavigation from './MyPostsNavigation';
-import {Profile, screenOptions as profileScreenOptions} from '../Profile';
-import PasswordConfirm from '../PasswordConfirm';
+import ProfileNavigation from './ProfileNavigation';
+
 import {logout} from '../../store/actions/auth';
-import {View} from 'react-native';
-import {Divider, Avatar, Text} from 'react-native-paper';
 
 const HomeNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -53,32 +52,6 @@ const HomeNavigator = () => {
   );
 };
 
-const ProfileNavigator = () => {
-  const Stack = createStackNavigator();
-
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: Colors.blue,
-        },
-        headerTintColor: Colors.white,
-      }}>
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={profileScreenOptions}
-      />
-
-      <Stack.Screen
-        name="Password"
-        component={PasswordConfirm}
-        options={{headerTitle: 'Delete Account'}}
-      />
-    </Stack.Navigator>
-  );
-};
-
 const MainNavigation = () => {
   const avatar = useSelector(state => state.auth.profilePic);
   const userName =
@@ -109,6 +82,7 @@ const MainNavigation = () => {
             </View>
             <View style={{flex: 1, marginTop: 10}}>
               <DrawerItemList {...props} />
+              <Divider />
             </View>
             <View style={{marginVertical: 20, justifyContent: 'center'}}>
               <Divider />
@@ -143,7 +117,7 @@ const MainNavigation = () => {
       />
       <Drawer.Screen
         name="Profile"
-        component={ProfileNavigator}
+        component={ProfileNavigation}
         options={{
           drawerIcon: props => (
             <MaterialCommunityIcons

@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 
 import {deleteAccount} from '../../store/actions/auth';
 import {Colors} from '../../utils/constant';
+import {PasswordInput} from '../../components';
 import styles from './styles';
 
 const PasswordConfirm = () => {
@@ -54,14 +55,10 @@ const PasswordConfirm = () => {
 
   return (
     <View style={styles.screen}>
-      <Text>Confirm your password</Text>
-      <TextInput
-        style={styles.inputContainer}
-        placeholder="Your Password"
-        secureTextEntry
-        autoCapitalize="none"
-        autoCorrect={false}
+      <PasswordInput
+        label="Confirm your password"
         onChangeText={setPassword}
+        value={password}
       />
       <Button
         mode="contained"

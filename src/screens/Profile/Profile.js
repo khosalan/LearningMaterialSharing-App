@@ -179,7 +179,9 @@ const Profile = ({navigation}) => {
             <MaterialCommunityIcons name="pencil" style={styles.icon} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.editableContainer}>
+          <TouchableOpacity
+            style={styles.editableContainer}
+            onPress={() => navigation.navigate('ChangePassword')}>
             <View style={styles.infoContainer}>
               <Text style={{...styles.editableLabel, marginBottom: 0}}>
                 Password
@@ -195,9 +197,7 @@ const Profile = ({navigation}) => {
             <Text style={styles.editableLabel}>Advanced</Text>
             <Text
               style={styles.deleteText}
-              onPress={() =>
-                navigation.navigate('Password', {title: 'Delete Account'})
-              }>
+              onPress={() => navigation.navigate('Delete')}>
               Delete account
             </Text>
           </View>

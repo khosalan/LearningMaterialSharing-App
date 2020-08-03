@@ -8,7 +8,7 @@ export const SET_COMMENTS = 'SET_COMMENTS';
 export const addComments = (postID, comment) => {
   return async (dispatch, getState) => {
     const owner = getState().auth.userID;
-    const avatar = getState().auth.profilePic;
+
     const ownerName =
       getState().auth.firstName + ' ' + getState().auth.lastName;
 
@@ -22,7 +22,6 @@ export const addComments = (postID, comment) => {
           createdAt: firestore.FieldValue.serverTimestamp(),
           owner,
           ownerName,
-          avatar,
         });
       const resData = await response.get();
 
@@ -34,7 +33,6 @@ export const addComments = (postID, comment) => {
           createdAt: resData.data().createdAt._seconds,
           owner,
           ownerName,
-          avatar,
         },
       });
     } catch (e) {
@@ -63,7 +61,6 @@ export const fetchComments = postID => {
             documentSnapshot.data().ownerName,
             documentSnapshot.data().createdAt._seconds,
             documentSnapshot.data().comment,
-            documentSnapshot.data().avatar,
           ),
         );
       });

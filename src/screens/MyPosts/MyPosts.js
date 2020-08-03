@@ -46,6 +46,10 @@ const MyPosts = ({navigation}) => {
     });
   };
 
+  const commentsHandler = postID => {
+    navigation.navigate('Comments', {postID});
+  };
+
   const renderItem = ({item}) => {
     return (
       <Card
@@ -61,6 +65,7 @@ const MyPosts = ({navigation}) => {
           like={item.like}
           dislike={item.dislike}
           navigation={navigation}
+          onClick={() => commentsHandler(item.id)}
         />
       </Card>
     );

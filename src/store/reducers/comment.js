@@ -20,7 +20,6 @@ export default (state = initialState, action) => {
         action.commentData.ownerName,
         action.commentData.createdAt,
         action.commentData.comment,
-        action.commentData.avatar,
       );
 
       return {
