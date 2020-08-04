@@ -136,7 +136,11 @@ export const changePassword = (oldPassword, newPassword) => {
       AsyncStorage.removeItem('userData');
       dispatch({type: LOG_OUT});
     } catch (e) {
-      console.log(e);
+      if (e.code === 'auth/wrong-password') {
+        throw new Error(
+          'Incorrect password. Please enter your password correctly',
+        );
+      }
     }
   };
 };

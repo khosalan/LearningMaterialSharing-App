@@ -73,6 +73,7 @@ const PostDescription = ({navigation, route}) => {
           description={post.description}
           imageUrl={post.imageUrl}
           links={post.links}
+          document={post.document}
           avatar={post.avatar}>
           <CardBottom
             id={post.id}

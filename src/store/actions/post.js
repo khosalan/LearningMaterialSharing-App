@@ -1,4 +1,6 @@
-import firestore from '@react-native-firebase/firestore';
+import firestore, {firebase} from '@react-native-firebase/firestore';
+import {utils} from '@react-native-firebase/app';
+import storage from '@react-native-firebase/storage';
 import Post from '../../models/post';
 
 export const CREATE_POST = 'CREATE_POST';
@@ -32,6 +34,7 @@ export const fetchPosts = () => {
             documentSnapshot.data().links,
             '',
             documentSnapshot.data().avatar,
+            documentSnapshot.data().document,
           ),
         );
       });
@@ -71,6 +74,7 @@ export const fetchMyPosts = () => {
             documentSnapshot.data().links,
             '',
             documentSnapshot.data().avatar,
+            documentSnapshot.data().document,
           ),
         ),
       );
@@ -86,12 +90,13 @@ export const fetchMyPosts = () => {
   };
 };
 
-export const createPost = (title, description, imageUrl, links) => {
+export const createPost = (title, description, imageUrl, links, filePath) => {
   return async (dispatch, getState) => {
     const owner = getState().auth.userID;
     const ownerName =
       getState().auth.firstName + ' ' + getState().auth.lastName;
     const avatar = getState().auth.profilePic;
+    let url = '';
 
     try {
       const response = await firestore()
@@ -108,6 +113,20 @@ export const createPost = (title, description, imageUrl, links) => {
         });
       const resData = await response.get();
 
+      if (filePath) {
+        const reference = storage().ref(`posts/${resData.id}`);
+        await reference.putFile(filePath);
+
+        url = await storage()
+          .ref(`posts/${resData.id}`)
+          .getDownloadURL();
+      }
+
+      await firestore()
+        .collection('Posts')
+        .doc(resData.id)
+        .update({document: url});
+
       dispatch({
         type: CREATE_POST,
         postData: {
@@ -120,6 +139,7 @@ export const createPost = (title, description, imageUrl, links) => {
           owner,
           ownerName,
           avatar: avatar ? avatar : null,
+          document: url,
         },
       });
     } catch (e) {
@@ -131,9 +151,8 @@ export const createPost = (title, description, imageUrl, links) => {
 
 export const updatePost = (id, title, description, imageUrl, links) => {
   return async dispatch => {
-    console.log(links);
     try {
-      const response = await firestore()
+      await firestore()
         .collection('Posts')
         .doc(id)
         .update({
@@ -143,8 +162,6 @@ export const updatePost = (id, title, description, imageUrl, links) => {
           links,
           createdAt: firestore.FieldValue.serverTimestamp(),
         });
-
-      // const resData = await response.get();
 
       dispatch({
         type: UPDATE_POST,

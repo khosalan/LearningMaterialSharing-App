@@ -1,10 +1,12 @@
 import React, {useState, useReducer, useCallback, useEffect} from 'react';
 import {ScrollView, View, Text, Alert, ActivityIndicator} from 'react-native';
+import DocumentPicker from 'react-native-document-picker';
+import FilePickerManager from 'react-native-file-picker';
+import Toast from 'react-native-simple-toast';
 import {useDispatch, useSelector} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {Button} from 'react-native-paper';
 
-import {HeaderButton, Input} from '../../components';
+import {Input} from '../../components';
 import styles from './styles';
 import {Colors} from '../../utils/constant';
 import * as postActions from '../../store/actions/post';
@@ -15,7 +17,9 @@ const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {...state.inputValues, [action.input]: action.value};
 
-    const isValid = action.value.trim().length !== 0 ? true : false;
+    let isValid = action.value.trim().length !== 0 ? true : false;
+
+    if (action.input === 'imageUrl') isValid = true;
 
     const updateValidities = {
       ...state.inputValidities,
@@ -46,6 +50,9 @@ const AddPost = ({navigation, route}) => {
   const [input, setInput] = useState(
     editPost ? editPost.links.toString().replace(/,/, `\n`) : '',
   );
+
+  var [documentPath, setDocumentPath] = useState();
+  var [documentName, setDocumentName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
@@ -68,7 +75,6 @@ const AddPost = ({navigation, route}) => {
       title: editPost ? true : false,
       description: editPost ? true : false,
       imageUrl: true,
-      links: true,
     },
 
     formIsValid: editPost ? true : false,
@@ -78,6 +84,19 @@ const AddPost = ({navigation, route}) => {
     dispatchFormState({type: FORM_INPUT_UPDATE, value: text, input: inputID});
   };
 
+  const documentPickHandler = async () => {
+    FilePickerManager.showFilePicker(null, response => {
+      if (response.didCancel) {
+        console.log('User cancelled file picker');
+      } else if (response.error) {
+        console.log('FilePickerManager Error: ', response.error);
+      } else {
+        setDocumentPath(response.path);
+        setDocumentName(response.fileName);
+      }
+    });
+  };
+
   const submitHandler = useCallback(async () => {
     if (!formState.formIsValid) {
       Alert.alert('Wrong Input!', 'Please check the errors in the form', [
@@ -85,7 +104,8 @@ const AddPost = ({navigation, route}) => {
       ]);
       return;
     }
-
+    // console.log(documentPath);
+    // console.log(documentName);
     setError(null);
     setIsLoading(true);
 
@@ -107,6 +127,7 @@ const AddPost = ({navigation, route}) => {
             formState.inputValues.description,
             formState.inputValues.imageUrl,
             input.split(/\n/),
+            documentPath,
           ),
         );
       }
@@ -173,6 +194,18 @@ const AddPost = ({navigation, route}) => {
         autocorrect={false}
         autoCapitalize="none"
       />
+
+      {!editPost && (
+        <View style={styles.uploadDocument}>
+          <Text>Upload a Document</Text>
+          <Button
+            mode="contained"
+            style={styles.chooseButton}
+            onPress={documentPickHandler}>
+            {documentName ? documentName : 'Choose a file'}
+          </Button>
+        </View>
+      )}
 
       <Button
         mode="contained"

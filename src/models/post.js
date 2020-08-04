@@ -10,6 +10,7 @@ class Post {
     links,
     like,
     avatar,
+    document,
   ) {
     this.id = id;
     this.owner = owner;
@@ -21,6 +22,7 @@ class Post {
     this.like = like;
     this.links = links;
     this.avatar = avatar;
+    this.document = document;
   }
 }
 

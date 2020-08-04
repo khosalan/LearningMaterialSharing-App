@@ -14,6 +14,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  uploadDocument: {
+    marginBottom: 25,
+  },
+
+  chooseButton: {
+    marginTop: 10,
+    alignItems: 'center',
+    width: '80%',
+    backgroundColor: Colors.darkGray,
+  },
 });
 
 export default styles;

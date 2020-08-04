@@ -58,24 +58,28 @@ export default (state = initialState, action) => {
       };
 
     case UPDATE_POST:
-      const postID = state.myPosts.findIndex(
+      const postID = state.allPosts.findIndex(
+        post => post.id === action.postData.id,
+      );
+
+      const myPostID = state.myPosts.findIndex(
         post => post.id === action.postData.id,
       );
 
       const updatedPost = new Post(
         action.postData.id,
-        state.myPosts[postID].ownerId,
-        state.myPosts[postID].ownerName,
-        state.myPosts[postID].time,
+        state.myPosts[myPostID].ownerId,
+        state.myPosts[myPostID].ownerName,
+        state.myPosts[myPostID].time,
         action.postData.title,
         action.postData.imageUrl,
         action.postData.description,
         action.postData.links,
-        state.myPosts[postID].avatar,
+        state.myPosts[myPostID].avatar,
       );
 
       const updateMyPosts = [...state.myPosts];
-      updateMyPosts[postID] = updatedPost;
+      updateMyPosts[myPostID] = updatedPost;
 
       const updateAllPosts = [...state.allPosts];
       updateAllPosts[postID] = updatedPost;
@@ -83,7 +87,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allPosts: updateAllPosts,
-        myPosts: updateAllPosts,
+        myPosts: updateMyPosts,
       };
 
     case DELETE_POST:

@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, ScrollView, Alert, KeyboardAvoidingView} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  Alert,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -13,10 +20,11 @@ const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     setError(null);
     if (
       password.length < 6 ||
@@ -31,8 +39,13 @@ const ChangePassword = () => {
       setError('Password does not match');
       return;
     }
-
-    dispatch(changePassword(password, newPassword));
+    try {
+      setIsLoading(true);
+      await dispatch(changePassword(password, newPassword));
+    } catch (e) {
+      setError(e.message);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -41,6 +54,15 @@ const ChangePassword = () => {
       setError(null);
     }
   }, [error]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.centered}>
+        <Text>Please wait</Text>
+        <ActivityIndicator size="large" color={Colors.blue} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.screen}>

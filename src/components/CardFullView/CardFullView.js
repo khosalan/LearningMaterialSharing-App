@@ -1,11 +1,32 @@
 import React from 'react';
-import {View, Text, Image, Linking} from 'react-native';
+import {View, Text, Image, Linking, TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import {Avatar} from 'react-native-paper';
+import RNFetchBlob from 'rn-fetch-blob';
+import Toast from 'react-native-simple-toast';
 
 import styles from './styles';
 
 const CardFullView = props => {
+  const downloadFile = (url, title) => {
+    let dir = RNFetchBlob.fs.dirs.DownloadDir;
+    const options = {
+      fileCache: true,
+      addAndroidDownloads: {
+        useDownloadManager: true, // setting it to true will use the device's native download manager and will be shown in the notification bar.
+        notification: true,
+        path: dir + `/${title}`, // this is the path where your downloaded file will live in
+        description: 'Downloading doc',
+      },
+    };
+
+    RNFetchBlob.config({...options})
+      .fetch('GET', url)
+      .then(res => {
+        Toast.show('Downloaded success', Toast.LONG, Toast.BOTTOM);
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.authorContainer}>
@@ -58,6 +79,16 @@ const CardFullView = props => {
               ))
             : null}
         </View>
+
+        {props.document !== '' && props.document ? (
+          <View style={styles.linkContainer}>
+            <Text style={styles.linkTitle}>Useful Document</Text>
+            <TouchableOpacity
+              onPress={() => downloadFile(props.document, props.title)}>
+              <Text style={styles.link}>Download the Material</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
 
       <View>{props.children}</View>

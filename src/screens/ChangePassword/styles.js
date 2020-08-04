@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
   spacer: {
     marginTop: 20,
   },
+
+  centered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;
