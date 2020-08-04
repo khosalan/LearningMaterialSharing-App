@@ -1,6 +1,5 @@
 import React, {useState, useReducer, useCallback, useEffect} from 'react';
 import {ScrollView, View, Text, Alert, ActivityIndicator} from 'react-native';
-import DocumentPicker from 'react-native-document-picker';
 import FilePickerManager from 'react-native-file-picker';
 import Toast from 'react-native-simple-toast';
 import {useDispatch, useSelector} from 'react-redux';
@@ -85,11 +84,11 @@ const AddPost = ({navigation, route}) => {
   };
 
   const documentPickHandler = async () => {
-    FilePickerManager.showFilePicker(null, response => {
+    FilePickerManager.showFilePicker(response => {
       if (response.didCancel) {
-        console.log('User cancelled file picker');
+        Toast.show('Cancelled the File Selection');
       } else if (response.error) {
-        console.log('FilePickerManager Error: ', response.error);
+        Toast.show('Something went wrong');
       } else {
         setDocumentPath(response.path);
         setDocumentName(response.fileName);
@@ -104,8 +103,7 @@ const AddPost = ({navigation, route}) => {
       ]);
       return;
     }
-    // console.log(documentPath);
-    // console.log(documentName);
+
     setError(null);
     setIsLoading(true);
 
@@ -136,7 +134,7 @@ const AddPost = ({navigation, route}) => {
       setError(e.message);
     }
     setIsLoading(false);
-  }, [dispatch, postID, formState, input]);
+  }, [dispatch, postID, formState, input, documentPath]);
 
   if (isLoading) {
     return (

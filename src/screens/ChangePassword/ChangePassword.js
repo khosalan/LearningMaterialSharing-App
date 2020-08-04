@@ -69,6 +69,7 @@ const ChangePassword = () => {
       <KeyboardAvoidingView style={{flex: 1}}>
         <PasswordInput
           label="Old Password"
+          placeholder="Enter Your Old Password"
           value={password}
           onChangeText={setPassword}
         />
@@ -76,6 +77,7 @@ const ChangePassword = () => {
 
         <PasswordInput
           label="New Password"
+          placeholder="Enter New Password"
           value={newPassword}
           onChangeText={setNewPassword}
         />
@@ -83,6 +85,7 @@ const ChangePassword = () => {
 
         <PasswordInput
           label="Confirm Password"
+          placeholder="Confirm Your New Password"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
         />

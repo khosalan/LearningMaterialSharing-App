@@ -10,7 +10,6 @@ const PasswordInput = props => {
       <TextInput
         {...props}
         style={styles.inputContainer}
-        placeholder="Enter Your Password"
         secureTextEntry
         autoCapitalize="none"
         autoCorrect={false}

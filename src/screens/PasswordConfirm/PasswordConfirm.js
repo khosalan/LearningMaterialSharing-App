@@ -56,7 +56,8 @@ const PasswordConfirm = () => {
   return (
     <View style={styles.screen}>
       <PasswordInput
-        label="Confirm your password"
+        label="Confirm Your password"
+        placeholder="Enter your Password"
         onChangeText={setPassword}
         value={password}
       />

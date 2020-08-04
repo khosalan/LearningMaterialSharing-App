@@ -183,7 +183,7 @@ export const updatePost = (id, title, description, imageUrl, links) => {
 export const deletePost = postID => {
   return async dispatch => {
     try {
-      const response = await firestore()
+      await firestore()
         .collection('Posts')
         .doc(postID)
         .delete();

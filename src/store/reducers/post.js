@@ -49,6 +49,7 @@ export default (state = initialState, action) => {
         action.postData.links,
         '',
         action.postData.avatar,
+        action.postData.document,
       );
 
       return {

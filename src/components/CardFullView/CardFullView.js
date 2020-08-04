@@ -11,7 +11,7 @@ const CardFullView = props => {
   const downloadFile = (url, title) => {
     let dir = RNFetchBlob.fs.dirs.DownloadDir;
     const options = {
-      fileCache: true,
+      //fileCache: true,
       addAndroidDownloads: {
         useDownloadManager: true, // setting it to true will use the device's native download manager and will be shown in the notification bar.
         notification: true,
