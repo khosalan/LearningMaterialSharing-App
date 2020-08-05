@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
   },
 
   post: {
-    color: Colors.blue,
     fontSize: 16,
   },
 

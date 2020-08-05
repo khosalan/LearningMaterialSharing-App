@@ -4,6 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
+import ForgotPassword from '../ForgotPassword';
 import {Colors} from '../../utils/constant';
 
 const AuthNavigation = () => {
@@ -48,6 +49,12 @@ const AuthNavigation = () => {
             />
           ),
         }}
+      />
+
+      <Stack.Screen
+        name="Forgot"
+        component={ForgotPassword}
+        options={{title: 'Forgot Password', headerTitleStyle: {fontSize: 22}}}
       />
     </Stack.Navigator>
   );

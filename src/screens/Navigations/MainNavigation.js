@@ -1,5 +1,5 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {useState} from 'react';
+import {View, ActivityIndicator} from 'react-native';
 import {Divider, Avatar, Text} from 'react-native-paper';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
@@ -59,8 +59,29 @@ const MainNavigation = () => {
     ' ' +
     useSelector(state => state.auth.lastName);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const dispatch = useDispatch();
   const Drawer = createDrawerNavigator();
+
+  const logoutHandler = async () => {
+    try {
+      setIsLoading(true);
+      await dispatch(logout());
+    } catch (e) {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Please wait</Text>
+        <ActivityIndicator size="large" color={Colors.blue} />
+      </View>
+    );
+  }
+
   return (
     <Drawer.Navigator
       drawerContentOptions={{activeTintColor: Colors.red}}
@@ -88,7 +109,7 @@ const MainNavigation = () => {
               <Divider />
               <DrawerItem
                 label="Log Out"
-                onPress={() => dispatch(logout())}
+                onPress={logoutHandler}
                 icon={props => (
                   <MaterialCommunityIcons
                     name="logout"

@@ -17,7 +17,6 @@ import {addComments, fetchComments} from '../../store/actions/comment';
 
 const Comments = ({route}) => {
   const [isLoading, setIsLoading] = useState(false);
-
   const [error, setError] = useState();
   const [comment, setComment] = useState('');
 
@@ -97,8 +96,17 @@ const Comments = ({route}) => {
           onChangeText={setComment}
         />
 
-        <TouchableOpacity onPress={commentHandler}>
-          <Text style={styles.post}>POST</Text>
+        <TouchableOpacity
+          onPress={commentHandler}
+          disabled={comment.trim().length === 0 ? true : false}>
+          <Text
+            style={{
+              ...styles.post,
+              color:
+                comment.trim().length === 0 ? Colors.darkGray : Colors.blue,
+            }}>
+            POST
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

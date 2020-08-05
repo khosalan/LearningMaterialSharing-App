@@ -35,14 +35,12 @@ const CardBottom = props => {
           </View>
         ) : null}
 
-        {!props.isFav ? (
-          <TouchableOpacity style={styles.iconButton} onPress={props.onClick}>
-            <MaterialCommunityIcons name="comment-text-outline" size={20} />
-            <View style={styles.comment}>
-              <Text>Comment</Text>
-            </View>
-          </TouchableOpacity>
-        ) : null}
+        <TouchableOpacity style={styles.iconButton} onPress={props.onClick}>
+          <MaterialCommunityIcons name="comment-text-outline" size={20} />
+          <View style={styles.comment}>
+            <Text>Comment</Text>
+          </View>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.favButton} onPress={handleFavourite}>
           <Ionicons name={isFav ? 'md-star' : 'md-star-outline'} size={20} />

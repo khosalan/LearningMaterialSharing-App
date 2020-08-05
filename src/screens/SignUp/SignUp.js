@@ -12,7 +12,7 @@ import {Button} from 'react-native-paper';
 
 import styles from './styles';
 import {Input} from '../../components';
-import {Colors} from '../../utils/constant';
+import {Colors, RegularExp} from '../../utils/constant';
 import {signUp} from '../../store/actions/auth';
 
 const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE';
@@ -21,7 +21,6 @@ const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {...state.inputValues, [action.input]: action.value};
 
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     let isValid = true;
 
     if (
@@ -35,7 +34,7 @@ const formReducer = (state, action) => {
 
     if (
       action.input === 'email' &&
-      !emailRegex.test(action.value.toLowerCase())
+      !RegularExp.emailRegex.test(action.value.toLowerCase())
     ) {
       isValid = false;
     }

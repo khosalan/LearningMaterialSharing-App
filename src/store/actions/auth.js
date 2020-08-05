@@ -145,10 +145,22 @@ export const changePassword = (oldPassword, newPassword) => {
   };
 };
 
+export const resetPassword = email => {
+  return async () => {
+    try {
+      await auth().sendPasswordResetEmail(email);
+    } catch (e) {
+      if (e.code === 'auth/user-not-found')
+        throw new Error('No user found on the provided email');
+      console.log(e.message);
+    }
+  };
+};
+
 export const logout = () => {
   return async dispatch => {
     await auth().signOut();
-    AsyncStorage.removeItem('userData');
+    await AsyncStorage.removeItem('userData');
     dispatch({type: LOG_OUT});
   };
 };
@@ -159,12 +171,6 @@ export const deleteAccount = password => {
       const user = auth().currentUser;
 
       await auth().signInWithEmailAndPassword(user.email, password);
-
-      await user.delete();
-      await firestore()
-        .collection('Users')
-        .doc(user.uid)
-        .delete();
 
       const posts = await firestore()
         .collection('Posts')
@@ -177,7 +183,15 @@ export const deleteAccount = password => {
         batch.delete(documentSnapShot.ref);
       });
 
-      batch.commit();
+      await batch.commit();
+
+      await firestore()
+        .collection('Users')
+        .doc(user.uid)
+        .delete();
+
+      await user.delete();
+
       AsyncStorage.removeItem('userData');
 
       dispatch({type: DELETE_ACCOUNT});
