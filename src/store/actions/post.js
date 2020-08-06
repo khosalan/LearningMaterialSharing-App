@@ -1,5 +1,4 @@
-import firestore, {firebase} from '@react-native-firebase/firestore';
-import {utils} from '@react-native-firebase/app';
+import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import Post from '../../models/post';
 
@@ -10,14 +9,18 @@ export const UPDATE_POST = 'UPDATE_POST';
 export const MY_POSTS = 'MY_POSTS';
 export const FAVOURITE_POST = 'FAVOURITE_POST';
 export const TOGGLE_FAVOURITE = 'TOGGLE_FAVOURITE';
+export const SET_MORE_POSTS = 'SET_MORE_POSTS';
+
+const query = firestore()
+  .collection('Posts')
+  .orderBy('createdAt', 'desc')
+  .limit(5);
 
 export const fetchPosts = () => {
   return async dispatch => {
     try {
-      const response = await firestore()
-        .collection('Posts')
-        .orderBy('createdAt', 'desc')
-        .get();
+      const response = await query.get();
+      let lastQuery;
 
       const loadedPosts = [];
 
@@ -37,14 +40,58 @@ export const fetchPosts = () => {
             documentSnapshot.data().document,
           ),
         );
+        lastQuery = documentSnapshot;
       });
 
       dispatch({
         type: SET_POSTS,
         posts: loadedPosts,
+        lastQuery,
       });
     } catch (e) {
       console.log(e);
+      throw new Error('Something went wrong');
+    }
+  };
+};
+
+export const fetchMore = () => {
+  return async (dispatch, getState) => {
+    const alreadyLoadedPosts = getState().posts.allPosts;
+    const lastQuery = getState().posts.lastQuery;
+    let newLastQuery;
+    try {
+      const response = await query.startAfter(lastQuery).get();
+
+      const loadedPosts = alreadyLoadedPosts;
+
+      response.forEach(documentSnapshot => {
+        loadedPosts.push(
+          new Post(
+            documentSnapshot.id,
+            documentSnapshot.data().owner,
+            documentSnapshot.data().ownerName,
+            documentSnapshot.data().createdAt._seconds,
+            documentSnapshot.data().title,
+            documentSnapshot.data().imageUrl,
+            documentSnapshot.data().description,
+            documentSnapshot.data().links,
+            '',
+            documentSnapshot.data().avatar,
+            documentSnapshot.data().document,
+          ),
+        );
+
+        newLastQuery = documentSnapshot;
+      });
+
+      dispatch({
+        type: SET_MORE_POSTS,
+        posts: loadedPosts,
+        newLastQuery,
+      });
+    } catch (e) {
+      console.log(e.message);
       throw new Error('Something went wrong');
     }
   };

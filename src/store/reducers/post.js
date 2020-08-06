@@ -8,6 +8,7 @@ import {
   UPDATE_POST,
   MY_POSTS,
   FAVOURITE_POST,
+  SET_MORE_POSTS,
 } from '../actions/post';
 import Post from '../../models/post';
 
@@ -23,6 +24,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allPosts: action.posts,
+        lastQuery: action.lastQuery,
+      };
+
+    case SET_MORE_POSTS:
+      return {
+        ...state,
+        allPosts: action.posts,
+        lastQuery: action.newLastQuery,
       };
 
     case MY_POSTS:

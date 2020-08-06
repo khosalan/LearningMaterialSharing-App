@@ -18,6 +18,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  footer: {
+    marginVertical: 20,
+    alignItems: 'center',
+  },
+
+  empty: {
+    alignSelf: 'center',
+    marginVertical: 5,
+  },
 });
 
 export default styles;

@@ -11,6 +11,8 @@ import * as postActions from '../../store/actions/post';
 const Home = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
   const [error, setError] = useState();
   const [search, setSearch] = useState('');
 
@@ -19,6 +21,7 @@ const Home = ({navigation}) => {
   const loadPost = useCallback(async () => {
     setError(null);
     setIsRefreshing(true);
+    setIsEmpty(false);
     try {
       await dispatch(postActions.fetchPosts());
       await dispatch(postActions.fetchFavourites());
@@ -93,6 +96,27 @@ const Home = ({navigation}) => {
     );
   };
 
+  const handleLoadMore = async () => {
+    try {
+      setIsLoadingMore(true);
+      if (!isEmpty) await dispatch(postActions.fetchMore());
+    } catch (e) {
+      console.log(e);
+      setIsEmpty(true);
+    }
+    setIsLoadingMore(false);
+  };
+
+  const renderFooter = () => {
+    return isLoadingMore ? (
+      <View style={styles.footer}>
+        <ActivityIndicator size="large" color={Colors.blue} />
+      </View>
+    ) : (
+      <Text style={styles.empty}>Nothing to load more</Text>
+    );
+  };
+
   if (isLoading) {
     return (
       <View style={styles.centered}>
@@ -117,6 +141,9 @@ const Home = ({navigation}) => {
           data={POSTS}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
+          onEndReached={!isLoadingMore && handleLoadMore}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={renderFooter}
         />
       )}
     </View>
