@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {Button} from 'react-native-paper';
+import Toast from 'react-native-simple-toast';
 import {useDispatch} from 'react-redux';
 
 import {PasswordInput} from '../../components';
@@ -42,6 +43,11 @@ const ChangePassword = () => {
     try {
       setIsLoading(true);
       await dispatch(changePassword(password, newPassword));
+      Toast.show(
+        'Password changed successfully. Please login again',
+        Toast.LONG,
+        Toast.BOTTOM,
+      );
     } catch (e) {
       setError(e.message);
       setIsLoading(false);

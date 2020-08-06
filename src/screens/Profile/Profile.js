@@ -171,7 +171,9 @@ const Profile = ({navigation}) => {
         </View>
 
         <View style={styles.editable}>
-          <TouchableOpacity style={styles.editableContainer}>
+          <TouchableOpacity
+            style={styles.editableContainer}
+            onPress={() => navigation.navigate('ChangeEmail')}>
             <View style={styles.infoContainer}>
               <Text style={styles.editableLabel}>Email</Text>
               <Text style={styles.editableInfo}>{email}</Text>

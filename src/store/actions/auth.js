@@ -145,6 +145,38 @@ export const changePassword = (oldPassword, newPassword) => {
   };
 };
 
+export const changeEmail = (password, email) => {
+  return async dispatch => {
+    try {
+      const userID = auth().currentUser.uid;
+      const user = auth().currentUser;
+      await auth().signInWithEmailAndPassword(
+        auth().currentUser.email,
+        password,
+      );
+      await user.updateEmail(email);
+      await firestore()
+        .collection('Users')
+        .doc(userID)
+        .update({email});
+      AsyncStorage.removeItem('userData');
+      dispatch({type: LOG_OUT});
+    } catch (e) {
+      if (e.code === 'auth/wrong-password') {
+        throw new Error(
+          'Incorrect password. Please enter your password correctly',
+        );
+      }
+      if (e.code === 'auth/email-already-in-use') {
+        throw new Error(
+          'The email address is already in use by another account',
+        );
+      }
+      throw e;
+    }
+  };
+};
+
 export const resetPassword = email => {
   return async () => {
     try {

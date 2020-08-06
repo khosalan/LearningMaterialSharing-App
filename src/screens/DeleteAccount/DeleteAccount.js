@@ -8,7 +8,7 @@ import {Colors} from '../../utils/constant';
 import {PasswordInput} from '../../components';
 import styles from './styles';
 
-const PasswordConfirm = () => {
+const DeleteAccount = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [error, setError] = useState();
@@ -73,4 +73,4 @@ const PasswordConfirm = () => {
   );
 };
 
-export default PasswordConfirm;
+export default DeleteAccount;

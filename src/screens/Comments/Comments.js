@@ -89,7 +89,7 @@ const Comments = ({route}) => {
 
       <View style={styles.commentInput}>
         <TextInput
-          placeholder="Leave your commets here...."
+          placeholder="Leave your comments here...."
           multiline
           autoCorrect={false}
           style={styles.input}

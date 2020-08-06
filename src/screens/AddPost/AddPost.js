@@ -83,7 +83,7 @@ const AddPost = ({navigation, route}) => {
     dispatchFormState({type: FORM_INPUT_UPDATE, value: text, input: inputID});
   };
 
-  const documentPickHandler = async () => {
+  const documentPickHandler = () => {
     FilePickerManager.showFilePicker(response => {
       if (response.didCancel) {
         Toast.show('Cancelled the File Selection');
@@ -166,7 +166,7 @@ const AddPost = ({navigation, route}) => {
         label="Description"
         error="Please enter desctiption"
         isError={formState.inputValidities.description}
-        placeholder="Enter desctiption"
+        placeholder="Enter description"
         multiline
         value={formState.inputValues.description}
         onChangeText={inputChangeHandler.bind(this, 'description')}

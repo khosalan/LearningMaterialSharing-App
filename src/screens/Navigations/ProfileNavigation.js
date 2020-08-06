@@ -3,8 +3,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {Colors} from '../../utils/constant';
 import {Profile, screenOptions as profileScreenOptions} from '../Profile';
-import PasswordConfirm from '../PasswordConfirm';
+import DeleteAccount from '../DeleteAccount';
 import ChangePassword from '../ChangePassword';
+import ChangeEmail from '../ChangeEmail';
 
 const ProfileNavigation = () => {
   const Stack = createStackNavigator();
@@ -30,8 +31,14 @@ const ProfileNavigation = () => {
       />
 
       <Stack.Screen
+        name="ChangeEmail"
+        component={ChangeEmail}
+        options={{headerTitle: 'Change Email'}}
+      />
+
+      <Stack.Screen
         name="Delete"
-        component={PasswordConfirm}
+        component={DeleteAccount}
         options={{headerTitle: 'Delete Account'}}
       />
     </Stack.Navigator>
