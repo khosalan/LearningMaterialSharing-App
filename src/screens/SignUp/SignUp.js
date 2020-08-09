@@ -146,7 +146,7 @@ const SignUp = ({navigation}) => {
 
   return (
     <KeyboardAvoidingView style={{flex: 1}} keyboardVerticalOffset={10}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.inputContainer}>
           <Input
             placeholder="First Name"
@@ -210,13 +210,18 @@ const SignUp = ({navigation}) => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <Button mode="contained" color={Colors.blue} onPress={handleSinUp}>
+          <Button
+            mode="contained"
+            style={styles.button}
+            color={Colors.blue}
+            onPress={handleSinUp}>
             SIGN UP
           </Button>
 
           <View style={styles.alreadyButton}>
             <Button
-              mode="contained"
+              mode="outlined"
+              style={{...styles.button, borderColor: Colors.lightRed}}
               color={Colors.lightRed}
               onPress={() => navigation.navigate('SignIn')}>
               ALREADY HAVE AN ACCOUNT

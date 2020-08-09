@@ -1,11 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 import ForgotPassword from '../ForgotPassword';
 import {Colors} from '../../utils/constant';
+import WelcomeScreen from '../WelcomeScreen';
 
 const AuthNavigation = () => {
   const Stack = createStackNavigator();
@@ -20,20 +20,22 @@ const AuthNavigation = () => {
         headerTintColor: Colors.white,
         headerTitleStyle: {
           fontSize: 25,
-          fontWeight: 'bold',
         },
       }}>
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{
+          title: 'SIGN IN',
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="SignIn"
         component={SignIn}
         options={{
           title: 'SIGN IN',
-          headerRight: () => (
-            <MaterialCommunityIcons
-              name="login"
-              style={{fontSize: 26, color: Colors.white, marginRight: 15}}
-            />
-          ),
+          headerLeft: null,
         }}
       />
       <Stack.Screen
@@ -42,12 +44,6 @@ const AuthNavigation = () => {
         options={{
           title: 'SIGN UP',
           headerLeft: null,
-          headerRight: () => (
-            <MaterialCommunityIcons
-              name="account-plus"
-              style={{fontSize: 26, color: Colors.white, marginRight: 15}}
-            />
-          ),
         }}
       />
 

@@ -184,7 +184,7 @@ const AddPost = ({navigation, route}) => {
       />
 
       <Input
-        label="Usefull Links (Place every links in a new line)"
+        label="Useful Links (Place every links in a new line)"
         placeholder="Enter every links in a new line "
         multiline
         value={input}

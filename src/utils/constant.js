@@ -9,6 +9,8 @@ const Colors = {
   lightRed: '#db324f',
   orange: '#d6661c',
   commentGray: '#e8ebed',
+  green: '#50C878',
+  yellow: '#e1ad01',
 };
 
 const RegularExp = {

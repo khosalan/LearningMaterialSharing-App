@@ -25,6 +25,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  button: {
+    borderRadius: 8,
+  },
 });
 
 export default styles;

@@ -124,7 +124,7 @@ const SignIn = ({navigation}) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.inputContainer}>
         <Input
           placeholder="Email address"
@@ -164,14 +164,28 @@ const SignIn = ({navigation}) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <Button mode="contained" color={Colors.blue} onPress={handleSinIn}>
+        <Button
+          mode="contained"
+          style={styles.button}
+          color={Colors.blue}
+          style={{
+            ...styles.button,
+            borderWidth: 1,
+            borderColor: Colors.blue,
+          }}
+          onPress={handleSinIn}>
           SIGN IN
         </Button>
 
         <View style={styles.createButton}>
           <Button
-            mode="contained"
+            mode="outlined"
             color={Colors.lightRed}
+            style={{
+              ...styles.button,
+              borderColor: Colors.lightRed,
+              //borderWidth: 1,
+            }}
             onPress={() => navigation.navigate('SignUp')}>
             CREATE AN ACCOUNT
           </Button>
