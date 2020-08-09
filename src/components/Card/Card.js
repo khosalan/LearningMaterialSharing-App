@@ -62,7 +62,6 @@ const Card = props => {
         </TouchableCmp>
       </View>
 
-      {/* <CardBottom like={props.like} dislike={props.dislike} /> */}
       <View>{props.children}</View>
     </View>
   );

@@ -8,6 +8,7 @@ import {
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
+import Toast from 'react-native-simple-toast';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {Avatar, Text, Divider} from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -47,7 +48,7 @@ const Profile = ({navigation}) => {
         dispatch(uploadProfilePicture(image.path));
       })
       .catch(e => {
-        console.log(e);
+        Toast.show('Cancelled image selection');
       });
     bs.current.snapTo(1);
   };
@@ -63,8 +64,7 @@ const Profile = ({navigation}) => {
         dispatch(uploadProfilePicture(image.path));
       })
       .catch(e => {
-        console.log(e);
-        setIsLoading(false);
+        Toast.show('Cancelled image selection');
       });
 
     bs.current.snapTo(1);

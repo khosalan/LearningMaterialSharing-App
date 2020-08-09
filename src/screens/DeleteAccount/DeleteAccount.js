@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, ActivityIndicator, Alert} from 'react-native';
+import {View, Text, ActivityIndicator, Alert} from 'react-native';
 import {Button} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 

@@ -49,6 +49,7 @@ const Comments = ({route}) => {
     try {
       setIsLoading(true);
       await dispatch(addComments(postID, comment));
+      setComment('');
     } catch (e) {}
     setIsLoading(false);
   };
@@ -94,6 +95,7 @@ const Comments = ({route}) => {
           autoCorrect={false}
           style={styles.input}
           onChangeText={setComment}
+          value={comment}
         />
 
         <TouchableOpacity

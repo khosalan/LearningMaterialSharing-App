@@ -1,5 +1,3 @@
-import POSTS from '../../data/dummy-data';
-
 import {
   CREATE_POST,
   TOGGLE_FAVOURITE,

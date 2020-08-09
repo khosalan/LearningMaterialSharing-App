@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {View, ActivityIndicator, Alert} from 'react-native';
 import {Button} from 'react-native-paper';
-import Toast from 'react-native-simple-toast';
 import {useDispatch} from 'react-redux';
 
 import {Input} from '../../components';
@@ -42,7 +41,6 @@ const ForgotPassword = ({navigation}) => {
 
   useEffect(() => {
     if (error) {
-      console.log(error);
       Alert.alert('Error', error, [{text: 'Okay'}]);
     }
   }, [error]);

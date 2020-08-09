@@ -4,15 +4,18 @@ import {Colors} from '../../utils/constant';
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    marginVertical: 5,
     borderTopColor: Colors.darkGray,
     borderBottomColor: Colors.darkGray,
     backgroundColor: Colors.white,
-    elevation: 6,
+    elevation: 3,
+    borderRadius: 15,
+    marginHorizontal: 10,
   },
 
   icon: {
     margin: 6,
+    marginLeft: 0,
   },
 
   authorContainer: {

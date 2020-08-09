@@ -36,7 +36,6 @@ export const addComments = (postID, comment) => {
         },
       });
     } catch (e) {
-      console.log(e);
       throw new Error(e);
     }
   };
@@ -70,7 +69,6 @@ export const fetchComments = postID => {
         comments: loadedComments,
       });
     } catch (e) {
-      console.log(e);
       throw new Error('Something went wrong');
     }
   };

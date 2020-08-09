@@ -6,7 +6,6 @@ import {Colors} from '../../utils/constant';
 import styles from './styles';
 
 const Input = props => {
-  //console.log(props);
   return (
     <View style={styles.inputContainer}>
       <Text>{props.label}</Text>

@@ -37,14 +37,6 @@ const Home = ({navigation}) => {
     }
   }, [error]);
 
-  // useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', loadPost);
-
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, [loadPost]);
-
   useEffect(() => {
     setIsLoading(true);
     loadPost().then(() => {
@@ -101,7 +93,6 @@ const Home = ({navigation}) => {
       setIsLoadingMore(true);
       if (!isEmpty) await dispatch(postActions.fetchMore());
     } catch (e) {
-      console.log(e);
       setIsEmpty(true);
     }
     setIsLoadingMore(false);
@@ -152,7 +143,7 @@ const Home = ({navigation}) => {
 
 export const screenOptions = ({navigation}) => {
   return {
-    headerTitle: 'E-Learn Share',
+    headerTitle: 'LearnZ',
 
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>

@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
-    //marginHorizontal: 15,
+    marginHorizontal: 10,
     marginBottom: 5,
-    //borderWidth: 1,
-    //borderRadius: 10,
-    backgroundColor: Colors.bgGray,
+    borderRadius: 10,
+    backgroundColor: Colors.white,
     elevation: 8,
+    height: 50,
   },
 
   icon: {

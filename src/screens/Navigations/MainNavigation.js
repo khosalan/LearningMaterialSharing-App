@@ -27,6 +27,7 @@ const HomeNavigator = () => {
       initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: Colors.red,
+        keyboardHidesTabBar: true,
       }}>
       <Tab.Screen
         name="Home"

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, Image, ActivityIndicator} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {useDispatch} from 'react-redux';
 
@@ -30,7 +30,17 @@ const StartUpScreen = () => {
   }, []);
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.bgGray,
+      }}>
+      <Image
+        source={require('../../../assets/logo.png')}
+        style={{width: 80, height: 80}}
+      />
       <ActivityIndicator size="large" color={Colors.primary} />
     </View>
   );

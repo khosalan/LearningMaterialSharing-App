@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -25,16 +25,6 @@ const CardBottom = props => {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        {!props.isFav ? (
-          <View style={styles.iconButton}>
-            <TouchableOpacity>
-              <AntDesign name="like2" size={20} />
-            </TouchableOpacity>
-
-            <Text style={styles.count}>20</Text>
-          </View>
-        ) : null}
-
         <TouchableOpacity style={styles.iconButton} onPress={props.onClick}>
           <MaterialCommunityIcons name="comment-text-outline" size={20} />
           <View style={styles.comment}>
@@ -43,7 +33,7 @@ const CardBottom = props => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.favButton} onPress={handleFavourite}>
-          <Ionicons name={isFav ? 'md-star' : 'md-star-outline'} size={20} />
+          <Ionicons name={isFav ? 'md-star' : 'md-star-outline'} size={24} />
         </TouchableOpacity>
       </View>
     </View>

@@ -49,7 +49,6 @@ export const fetchPosts = () => {
         lastQuery,
       });
     } catch (e) {
-      console.log(e);
       throw new Error('Something went wrong');
     }
   };
@@ -91,7 +90,6 @@ export const fetchMore = () => {
         newLastQuery,
       });
     } catch (e) {
-      console.log(e.message);
       throw new Error('Something went wrong');
     }
   };
@@ -131,7 +129,6 @@ export const fetchMyPosts = () => {
         myPosts: loadedPosts,
       });
     } catch (e) {
-      console.log(e);
       throw new Error('Something went wrong');
     }
   };
@@ -190,7 +187,6 @@ export const createPost = (title, description, imageUrl, links, filePath) => {
         },
       });
     } catch (e) {
-      console.log(e);
       throw new Error(e);
     }
   };
@@ -221,7 +217,6 @@ export const updatePost = (id, title, description, imageUrl, links) => {
         },
       });
     } catch (e) {
-      console.log(e);
       throw new Error(e);
     }
   };
@@ -306,7 +301,6 @@ export const fetchFavourites = () => {
         favouritePosts: loadedPosts,
       });
     } catch (e) {
-      console.log(e);
       throw new Error('Something went wrong');
     }
   };

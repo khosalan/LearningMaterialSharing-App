@@ -37,7 +37,6 @@ export const authenticate = (userID, token, firstName, lastName, regNo) => {
         profilePic: url,
       });
     } catch (e) {
-      console.log(e);
       AsyncStorage.removeItem('userData');
       dispatch({type: TRY_AUTO_LOGIN});
     }
@@ -184,7 +183,6 @@ export const resetPassword = email => {
     } catch (e) {
       if (e.code === 'auth/user-not-found')
         throw new Error('No user found on the provided email');
-      console.log(e.message);
     }
   };
 };
@@ -228,7 +226,6 @@ export const deleteAccount = password => {
 
       dispatch({type: DELETE_ACCOUNT});
     } catch (e) {
-      console.log(e);
       if (e.code === 'auth/wrong-password') {
         throw new Error(
           'Incorrect password. Please enter your password correctly',

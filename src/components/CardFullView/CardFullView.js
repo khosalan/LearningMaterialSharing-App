@@ -24,6 +24,9 @@ const CardFullView = props => {
       .fetch('GET', url)
       .then(res => {
         Toast.show('Downloaded success', Toast.LONG, Toast.BOTTOM);
+      })
+      .catch(e => {
+        Toast.show('Something went wrong', Toast.LONG, Toast.BOTTOM);
       });
   };
 
